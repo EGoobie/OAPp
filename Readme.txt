@@ -1,2 +1,2 @@
 This project is an inventory management system for Open Air Pub.
-This is the dev branch.
+This is the dev branch. (Not actually dev branch)
