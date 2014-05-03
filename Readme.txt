@@ -1,1 +1,0 @@
-This project is an inventory management system for McGill's Open Air Pub.
