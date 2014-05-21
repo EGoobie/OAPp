@@ -1,0 +1,29 @@
+
+<!-- form for adding a product (might need to add input for 3 letter code)--> 
+<form action="AddProduct.php" method="POST">
+    <label>
+        Product Name <input type="text" name="prodName">
+    </label>
+	<!-- needs more information about category-->
+    <br>
+    <input type="submit" value="Add Product">
+</form>
+
+<!--form for removing an item by using its product code-->
+<form action="RemoveItem.php" method="GET">
+    <label>
+        Product Name <input type="text" name="prodCode">
+    </label>
+    <br>
+    <input type="submit" value="Remove Item">
+</form>
+
+,<!--form to add items for a given product-->
+<form action="AddItems.php" method="POST">
+    <label>
+        Number of Items <input type="text" name="numItems">
+    </label>
+	<!-- needs more information about category and product-->
+    <br>
+    <input type="submit" value="Add Items">
+</form>
