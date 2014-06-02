@@ -8,16 +8,18 @@ class DataManager{
 	
 	//constructor which connects to the db
 	public function _construct(){
-		$this->connect;
+		$this->connect();
 	}
 	
 	//connects to the database
 	public function connect(){
 		try {
-			$this->connection= new PDO("mysql:host=localhost;dbname=OApp", "OApp", "3ngin33ring"); //change access parameters
-		}
-		catch(PDOException $e) {
-			echo $e->getMessage();
+		$this->connection = new PDO('mysql:host=127.0.0.1;dbname=OApp', "OApp", "3ngin33ring");
+			
+		} 
+		catch (PDOException $e) {
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
 		}
 	}
 	
@@ -49,51 +51,25 @@ class DataManager{
 	
 	//adds a new product into the database, requires interaction with an html form
 	public function addProduct($prodData){
-		$query = $this->connection->prepare(
-        "INSERT INTO Products (catID, productName, prodAbv) VALUES (:catID,:prodName,:prodAbv)");
+		$query = $this->connection->prepare("INSERT INTO Products (prodID, catID, name, prodAbv) VALUES (DEFAULT,:catID,:name, :prodAbv)");
+		//$query->bindParam(':prodID', $prodID);
+		$query->bindParam(':catID', $catID);
+		$query->bindParam(':name', $name);
+		$query->bindParam(':prodAbv', $prodAbv);
 		
-		//add check for if product already exists or has existed in the past
+		//$prodID=$prodData['prodID'];
+		$catID= $prodData['catID'];
+		$name=$prodData['name'];
+		$prodAbv=$prodData['prodAbv'];
 		
-		$prodData=[':catID'=> $prodData['catID'], ':prodName'=> $prodData['prodName'], ':prodAbv'=>$prodData['prodAbv']];
-		
-		$query->execute($prodData);
+		$query->execute();
+		echo"product added";
 	}
 	
 	//this method must take in product details and a number of items to add, requires html form
 	//it must also generate a unique product code for each item and insert it with the item
 	public function addItems($itemData){
-		$numItems=$itemData['numItems'];
-		
-		$prodCode= genProdCode($itemData);//generate prodCode here
-		
-		for($i=0;$i<$numItems;$i++){
-			$query = $this->connection->prepare(
-			 "INSERT INTO Items (nameID, catID, prodCode) VALUES (:nameID, :catID,:prodCode)");
-			$itemData=[':productID'=> $itemData['productID'], ':catID'=>$itemData['catID'], ':prodCode'=> $prodCode];
-		
-			$query->execute($prodData);	
-		}
-	}
 	
-	//generates a unique product code
-	public function genProdCode($itemData){
-		$productID=$itemData['productID'];
-		$abv=getProdAbv($productID);
-		
-		//find largest value of prodCode for that item in stock and add 1 to it
-		//sum the product abreviated code and the number code to generate the prodCode
-		
-	}
-	
-	//gets the 3 letter abbreviated code for the product
-	public function getProdAbv($productID){
-		$query=$this->connection->prepare("SELECT * FROM Products WHERE productID=:productID"); 
-		
-		$data=[':productID'=>$productID];
-		
-		$query->execute($data);
-		
-		return $query['productAbv'];
 	}
 	
 	//removes an item from inventory and places it in the archive database with the timestamp of removal for data generation
