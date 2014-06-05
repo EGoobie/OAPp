@@ -11,10 +11,11 @@
     <title>OApp main page</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="oappMain.css" rel="stylesheet">
+    <link href="css/oappMain.css" rel="stylesheet">
+	<link href="css/component.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -27,8 +28,32 @@
   </head>
 
   <body>
+  
+	<div class="container">
+		<ul id="gn-menu" class="gn-menu-main">
+			<li class="gn-trigger">
+				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+				<nav class="gn-menu-wrapper">
+					<div class="gn-scroller">
+						<ul class="gn-menu">
+							<li class="gn-search-item">
+								<input placeholder="Search" type="search" class="gn-search">
+								<a class="gn-icon gn-icon-search"><span>Search</span></a>
+							</li>
+							<li>
+								<a class="gn-icon gn-icon-download">Products</a>
+							</li>
+						</ul>
+					</div><!-- /gn-scroller -->
+				</nav>
+			</li>
+			<li><a>OAP INVENTORY MANAGER</a></li>
+			<li><a><span>Remove Product</span></a></li>
+			<li><a><span>Add Product</span></a></li>
+		</ul>
+	</div><!-- /container -->
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<!--     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -50,32 +75,38 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Food</a></li>
+<!--     <div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Burgers</a></li>
-				</ul>	
-            <li><a href="">Beverages</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Inventory</h1>
-        </div>          
-    </div>
+					<li class="active"><a href="#">Overview</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="">Food</a></li>
+						<ul class="nav nav-sidebar">
+							<li class="active"><a href="#">Burgers</a></li>
+						</ul>	
+					<li><a href="">Beverages</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h1 class="page-header">Inventory</h1>
+			</div>          
+		</div>
+	</div> -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/docs.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="js/docs.min.js"></script>
+	<script src="js/classie.js"></script>
+	<script src="js/gnmenu.js"></script>
+	<script>
+		new gnMenu( document.getElementById( 'gn-menu' ) );
+	</script>
   </body>
 </html>
