@@ -30,43 +30,27 @@
   </head>
 
   <body>
-  
-	<div class="container">
-		<ul id="gn-menu" class="gn-menu-main">
-			<li class="gn-trigger">
-				<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
-				<nav class="gn-menu-wrapper">
-					<div class="gn-scroller">
-						<ul class="gn-menu">
-							<li class="gn-search-item">
-								<input placeholder="Search" type="search" class="gn-search">
-								<a class="gn-icon gn-icon-search"><span>Search</span></a>
-							</li>
-							<li>
-								<a class="gn-icon gn-icon-download">Products</a>
-							</li>
-						</ul>
-					</div><!-- /gn-scroller -->
-				</nav>
-			</li>
-			<li><a>OAP INVENTORY MANAGER</a></li>
-			<li><a><span>Remove Product</span></a></li>
-			<li><a><span>Add Product</span></a></li>
-		</ul>
-	</div><!-- /container -->
 
-<!--     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+       <!--<div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button>-->
+		 <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-sidebar">
+			 <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
           <a class="navbar-brand" href="index.html">OAP Inventory Manager</a>
         </div>
-        <div class="navbar-collapse collapse">
+		
+        <!--<div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="add.html">Add Product</a></li>
             <li><a href="remove.html">Remove Item</a></li>
@@ -75,22 +59,30 @@
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>
-        </div>
+        </div>-->
       </div>
-    </div> -->
+    </div> 
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle=offcanvas]').click(function() {
+			$('.row-offcanvas').toggleClass('active');
+			});
+		});
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+		$('.nav-sidebar').collapse("hide");
+		});
+	</script>
 
 
-<!--     <div class="container-fluid">
+   <div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
+			<div class="col-sm-3 col-md-2 sidebar" id="sidebar" role="navigation">
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">Overview</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
 					<li><a href="">Food</a></li>
-						<ul class="nav nav-sidebar">
-							<li class="active"><a href="#">Burgers</a></li>
-						</ul>	
 					<li><a href="">Beverages</a></li>
 				</ul>
 			</div>
@@ -98,7 +90,7 @@
 				<h1 class="page-header">Inventory</h1>
 			</div>          
 		</div>
-	</div> -->
+	</div> 
 
 
     <!-- Bootstrap core JavaScript
@@ -106,7 +98,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
    
     <!-- <script src="js/bootstrap.min.js"></script> -->
-    <script src="docs.min.js"></script>
+    
 	<script src="classie.js"></script>
 	<script src="gnmenu.js"></script>
 	<script>
