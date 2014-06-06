@@ -103,3 +103,33 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+/*
+ *Accordion
+ */
+#accordion {
+    list-style: none;
+    margin-right: -21px; /* 20px padding + 1px border */
+	margin-bottom: 20px;
+	margin-left: -20px;
+    width: 170px;
+}
+#accordion ul {
+    list-style: none;
+    padding: 0 0 0 0;
+}
+#accordion ul{
+    display: none;
+}
+#accordion ul li {
+    font-weight: normal;
+    cursor: auto;
+    padding-right: 20px;
+	padding-left: 20px;
+}
+#accordion a {
+    text-decoration: none;
+}
+#accordion a:hover {
+    text-decoration: underline;
+}
