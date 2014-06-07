@@ -52,7 +52,7 @@ body {
 /* Sidebar navigation */
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: -20px;
 }
 .nav-sidebar > li > a {
@@ -60,11 +60,16 @@ body {
   padding-left: 20px;
 }
 .nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #fff;
   background-color: #428bca;
 }
+.nav-sidebar > .active > a:hover{
+	text-decoration: none;
+    background: #4747FF;
+    color: #fff;
+}
+
 
 
 /*
@@ -109,14 +114,14 @@ body {
  */
 #accordion {
     list-style: none;
-    margin-right: -21px; /* 20px padding + 1px border */
+    margin-right: 21px; /* 20px padding + 1px border */
 	margin-bottom: 20px;
 	margin-left: -20px;
-    width: 170px;
+	padding-left: 20px;	
 }
+
 #accordion ul {
     list-style: none;
-    padding: 0 0 0 0;
 }
 #accordion ul{
     display: none;
@@ -124,12 +129,21 @@ body {
 #accordion ul li {
     font-weight: normal;
     cursor: auto;
-    padding-right: 20px;
-	padding-left: 20px;
+	margin-left: -24px;
+	padding-left: -20px;
 }
 #accordion a {
     text-decoration: none;
 }
 #accordion a:hover {
-    text-decoration: underline;
+	text-decoration: none;
+    background: #E8E8E9;
+    color: #0033CC;
+	/*border: 1px;
+	border-color: #E8E8E9;
+	border-style: inset; */
 }
+#accordion span{
+	border:0 #E8E8E9 solid;
+    border-bottom-width:1px;
+	
