@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,7 +25,13 @@
 	<script src="js\collapse.js"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
+	
+	<!--PHP includes--> 
+		<?php
+		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
+		 $data= new dataTest();
+		?>
+	 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -99,8 +106,25 @@
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">Overview</a></li>
 				</ul>
-				<ul class="nav nav-sidebar" id="accordion">
-					<li><div><a href="#"><span>Food</span></a></div>
+				<ul class="nav nav-sidebar" id="accordion"> 
+					<?php
+						$catQuery=$data->getCategories();
+						foreach($catQuery as $category){
+							$catName= $category['category'];?> 
+						<li><div><a href="#"><span><?php echo $catName;?></span></a></div>
+						<ul>
+							<?php
+								$prodQuery=$data->getProducts($catName);
+								foreach($prodQuery as $product){
+									$prodName= $product['name'];?>
+									<li><a href="#"><?php echo $prodName;?></a></li>
+							<?php } ?>		
+						</ul>
+						</li>
+						<?php } ?>
+					
+				
+					<!--<li><div><a href="#"><span>Food</span></a></div>
 						<ul>
 							<li><a href="#">Burger</a></li>
 							<li><a href="#">Chicken</a></li>
@@ -113,7 +137,7 @@
 							<li><a href="#">Smirnoff</a></li>
 							<li><a href="#">Non-Alcoholic</a></li>
 						</ul>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 			    

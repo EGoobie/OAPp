@@ -9,9 +9,12 @@
 	$dbh=$data->getInstance();
 	echo "got instance";
 	
-	$data->getTest();
+	$prodQuery=$data->getProducts("Beverages");
 	
-
+	foreach($prodQuery as $product){
+		$prodName= $product['name'];
+		echo $prodName;
+	}
 
 
 
