@@ -19,6 +19,7 @@
     <!-- Custom styles for this template -->
     <link href="css\oappMain.css" rel="stylesheet">
 	<link href="css\component.css" rel="stylesheet">
+	<link href="css\font-awesome.min.css" rel="stylesheet">
 
 	<!--Accordion Script -->
 	<script src="js\accordion.js"></script>
@@ -66,14 +67,6 @@
 
      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
-       <!--<div class="navbar-header">
-         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-
-          </button>-->
 		 <div class="navbar-header">
 		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar">
 			 <span class="sr-only">Toggle navigation</span>
@@ -83,17 +76,6 @@
            </button>
           <a class="navbar-brand" href="index.html">OAP Inventory Manager</a>
         </div>
-		
-        <!--<div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="add.html">Add Product</a></li>
-            <li><a href="remove.html">Remove Item</a></li>
-            <li><a href="connectionTest.php">Test Page</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>-->
       </div>
 
     </div>
@@ -103,46 +85,122 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				
-				<ul class="nav nav-sidebar">
+				<!--<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">Overview</a></li>
 				</ul>
 				<ul class="nav nav-sidebar" id="accordion"> 
 					<?php
-						$catQuery=$data->getCategories();
-						foreach($catQuery as $category){
-							$catName= $category['category'];?> 
-						<li><div><a href="#"><?php echo $catName;?></a><a href="#"><span class="glyphicon glyphicon-chevron-down pull-right"></span></a></div>
+						//$catQuery=$data->getCategories();
+						//foreach($catQuery as $category){
+							//$catName= $category['category'];?> 
+						<li><div><a href="#"><?php //echo $catName;?></a><a href="#"><span class="glyphicon glyphicon-chevron-down pull-right"></span></a></div>
 						<ul>
 							<?php
-								$prodQuery=$data->getProducts($catName);
-								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
-									<li><a href="#"><?php echo $prodName;?></a></li>
-							<?php } ?>		
+								//$prodQuery=$data->getProducts($catName);
+								//foreach($prodQuery as $product){
+									//$prodName= $product['name'];?>
+									<li><a href="#"><?php //echo $prodName;?></a></li>
+							<?php //} ?>		
 						</ul>
 						</li>
-						<?php } ?>
-					
+						<?php //} ?>
+				</ul>-->
 				
-					<!--<li><div><a href="#"><span>Food</span></a></div>
-						<ul>
-							<li><a href="#">Burger</a></li>
-							<li><a href="#">Chicken</a></li>
-							<li><a href="#">Veggie</a></li>
-						</ul>
-					</li>
-					<li><div><a href="#"><span>Beverages</span></a></div>
-						<ul>
-							<li><a href="#">Beer</a></li>
-							<li><a href="#">Smirnoff</a></li>
-							<li><a href="#">Non-Alcoholic</a></li>
-						</ul>
-					</li>-->
-				</ul>
+				<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="active">
+                            <i class="fa fa-home"></i>
+                            </span><a href ="#">Overview</a> </a>
+                        </h4>
+                    </div>
+                    
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-beer"></i>
+                            </span><a href = productPage.html>Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <?php
+								$prodQuery=$data->getProducts('Beverages');
+								foreach($prodQuery as $product){
+									$prodName= $product['name'];?>
+								<tr>
+                                    <td>
+                                        <a href="#"><?php echo $prodName;?></a>
+										<span class="badge">4</span>
+                                    </td>
+                                </tr>
+								<?php } ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-cutlery"></i>
+                            </span><a href = productPage.html>Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <?php
+								$prodQuery=$data->getProducts('Food');
+								foreach($prodQuery as $product){
+									$prodName= $product['name'];?>
+								<tr>
+                                    <td>
+                                        <a href="#"><?php echo $prodName;?></a>
+										<span class="badge">4</span>
+                                    </td>
+                                </tr>
+								<?php } ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-file">
+                            </span><a href = productPage.html>Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
 			</div>
 			    
 		</div>
-	</div> 
+	
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header">Inventory</h1>
 	</div>      
