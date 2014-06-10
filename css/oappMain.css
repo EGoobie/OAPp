@@ -70,6 +70,10 @@ body {
     color: #fff;
 }
 
+a: hover {
+	text-decoration: none;
+	color: #ffffff;
+}
 
 
 /*
