@@ -19,7 +19,8 @@
     <!-- Custom styles for this template -->
     <link href="css\oappMain.css" rel="stylesheet">
 	<link href="css\component.css" rel="stylesheet">
-
+	<link href="css\font-awesome.min.css" rel="stylesheet">
+	
 	<!--Accordion Script -->
 	<script src="js\accordion.js"></script>
 	
@@ -96,10 +97,6 @@
 	
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
-				
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Overview</a></li>
-				</ul>
 				<!-- Split button 
 				<div class="btn-group">
 					<button type="button" class="btn btn-info">Beverages</button>
@@ -127,7 +124,7 @@
 				<li><a href="#">Veggie</a></li>
 				</ul>
 				</div> -->
-				
+				<!--
 				<ul class="nav nav-sidebar" id="accordion">
 					<li><div><a id="category" href="productPage.html">Food</a><a href="#"><span class="glyphicon glyphicon-chevron-down pull-right"></span></a></div>
 						<ul>
@@ -144,6 +141,123 @@
 						</ul>
 					</li>
 				</ul> 
+				-->
+				<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="active">
+                            <i class="fa fa-home"></i>
+                            </span><a href ="#">Overview</a> </a>
+                        </h4>
+                    </div>
+                    
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-beer"></i>
+                            </span><a href = productPage.html>Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="#">Sleeman</a>
+										<span class="badge">4</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Sapporo</a>
+										<span class="badge">7</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Guiness</a>
+										<span class="badge">8</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Soda</a>
+                                        <span class="badge">11</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-cutlery"></i>
+                            </span><a href = productPage.html>Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="#">Burgers</a>
+										<span class="badge">4</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Chicken</a>
+										<span class="badge">7</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Hot Dogs</a>
+										<span class="badge">8</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Veggie</a>
+                                        <span class="badge">11</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-file">
+                            </span><a href = productPage.html>Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			</div>
 			    
 		</div>
