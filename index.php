@@ -111,7 +111,7 @@
 						$catQuery=$data->getCategories();
 						foreach($catQuery as $category){
 							$catName= $category['category'];?> 
-						<li><div><a href="#"><span><?php echo $catName;?></span></a></div>
+						<li><div><a href="#"><?php echo $catName;?></a><a href="#"><span class="glyphicon glyphicon-chevron-down pull-right"></span></a></div>
 						<ul>
 							<?php
 								$prodQuery=$data->getProducts($catName);
