@@ -68,5 +68,13 @@
 		$query->execute();
 		return $query;
 	}
+	
+	public function getCatID($category){
+		$catID= $this->connection->prepare("SELECT * FROM Categories WHERE category=:category");
+		$catID->bindParam(':category',$category);
+		$catID->execute();
+		$result=$catID->fetch();
+		return $result['catID'];
+	}
 }
 ?>	
