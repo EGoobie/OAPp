@@ -136,8 +136,8 @@ body {
 }
 #accordion a {
     text-decoration: none;
-	border:0 #E8E8E9 solid;
-    border-bottom-width:1px;
+	/*border:0 #E8E8E9 solid; 
+    border-bottom-width:1px;*/
 }
 #accordion a:hover {
 	text-decoration: none;
@@ -151,3 +151,6 @@ body {
 	border:0 #E8E8E9 solid;
     border-bottom-width:1px;
 */	
+#category{
+margin-right: 80px;
+}
