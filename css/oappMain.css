@@ -166,8 +166,8 @@ body{margin-top:50px;}
 }
 @media (max-width: 768px) {
   #oapIcon{
-	height: 20px;
-	
+	width: 0px;
+	display: none;
 	}
 }
 
