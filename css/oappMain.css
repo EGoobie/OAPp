@@ -11,7 +11,7 @@ body {
 /*
  * Global add-ons
  */
-
+ 
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
@@ -70,6 +70,10 @@ body {
     color: #fff;
 }
 
+a: hover {
+	text-decoration: none;
+	color: #ffffff;
+}
 
 
 /*
@@ -112,16 +116,16 @@ body {
 /*
  *Accordion
  */
-#accordion {
+/*#accordion {
     list-style: none;
-    margin-right: 21px; /* 20px padding + 1px border */
 	margin-bottom: 20px;
 	margin-left: -20px;
-	padding-left: 20px;	
+	padding-left: 20px;
 }
 
 #accordion ul {
     list-style: none;
+	
 }
 #accordion ul{
     display: none;
@@ -134,7 +138,9 @@ body {
 }
 #accordion a {
     text-decoration: none;
-}
+	/*border:0 #E8E8E9 solid; 
+    border-bottom-width:1px;*/
+/*}
 #accordion a:hover {
 	text-decoration: none;
     background: #E8E8E9;
@@ -142,8 +148,18 @@ body {
 	/*border: 1px;
 	border-color: #E8E8E9;
 	border-style: inset; */
-}
+/*}
 #accordion span{
-	border:0 #E8E8E9 solid;
+	margin-right: 20px;
+	/*border:0 #E8E8E9 solid;
     border-bottom-width:1px;
-	
+	*/
+/*} */
+body{margin-top:50px;}
+.glyphicon { margin-right:10px; }
+.panel-body { padding:0px; }
+.panel-body table tr td { padding-left: 15px }
+.panel-body .table {margin-bottom: 0px; }
+#oapIcon{
+	margin-top: -10px;
+}

@@ -76,5 +76,12 @@
 		$result=$catID->fetch();
 		return $result['catID'];
 	}
+	
+	public function deleteProduct($product) {
+		$query = $this->connection->prepare("DELETE FROM Products WHERE name = :name");
+
+		$query->bindParam(':name', $product);
+		return $query->execute($data);
+	}
 }
 ?>	

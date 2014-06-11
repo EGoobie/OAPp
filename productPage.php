@@ -58,7 +58,7 @@
              <span class="icon-bar"></span>
              <span class="icon-bar"></span>
            </button>
-          <a class="navbar-brand" href="index.html">OAP Inventory Manager</a>
+          <a class="navbar-brand" href="index.html"><img  id="oapIcon" height="40px" src="oapIconB.jpg"  alt="The best place on Earth">OAP Inventory Manager</a>
         </div>
       </div>
 
@@ -140,17 +140,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
+                                        <span class="glyphicon glyphicon-usd"></span><a href="#">Sales</a>
                                     </td>
                                 </tr>
                             </table>
@@ -169,7 +159,7 @@
 					$prodQuery=$data->getProducts($category);
 					foreach($prodQuery as $product){
 					$prodName= $product['name'];?>
-					<a href="#" class="list-group-item "><? echo $prodName;?><span href="#" class="btn btn-sm btn-danger">Remove Product</span></a>
+					<a href="#" class="list-group-item "><? echo $prodName;?><span href="#" onclick="deleteProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger">Remove Product</span></a>
 				<?php } ?>	
 			</div>
 			<!-- Button trigger modal -->
