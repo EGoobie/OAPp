@@ -164,6 +164,12 @@ body{margin-top:50px;}
 	margin-top: -10px;
 	margin-right: 10px;
 }
+@media (max-width: 768px) {
+  #oapIcon{
+	height: 30px;
+	
+	}
+}
 
 .panel-group a {
 	margin-left: 20px;
