@@ -5,7 +5,7 @@
 	
 	//constructor which connects to the db
 	public function __construct(){
-		echo "were in the constructor!";
+		//echo "were in the constructor!";
 		// Set options
 		$options = array(
 		PDO::ATTR_PERSISTENT => true, 
@@ -13,7 +13,7 @@
 		try {
 		$this->connection = new PDO('mysql:host=127.0.0.1;dbname=OApp', "OApp", "3ngin33ring", $options);
 		$instance=$connection;
-			echo "connected";
+			//echo "connected";
 		} 
 		catch (PDOException $e) {
 			print "Error!: " . $e->getMessage() . "<br/>";
@@ -50,6 +50,38 @@
 		
 		$query->execute();
 		echo"product added";
+	}
+	
+	public function getCategories(){
+		$query = $this->connection->prepare("SELECT * FROM Categories");
+		$query->execute();
+		return $query;
+	}
+	public function getProducts($category){
+		$catID= $this->connection->prepare("SELECT * FROM Categories WHERE category=:category");
+		$catID->bindParam(':category',$category);
+		$catID->execute();
+		$result=$catID->fetch();
+		$ID=$result['catID'];
+		$query = $this->connection->prepare("SELECT * FROM Products WHERE catID=:catID");
+		$query->bindParam(':catID', $ID);
+		$query->execute();
+		return $query;
+	}
+	
+	public function getCatID($category){
+		$catID= $this->connection->prepare("SELECT * FROM Categories WHERE category=:category");
+		$catID->bindParam(':category',$category);
+		$catID->execute();
+		$result=$catID->fetch();
+		return $result['catID'];
+	}
+	
+	public function deleteProduct($product) {
+		$query = $this->connection->prepare("DELETE FROM Products WHERE name = :name");
+
+		$query->bindParam(':name', $product);
+		return $query->execute($data);
 	}
 }
 ?>	
