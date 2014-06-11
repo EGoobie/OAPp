@@ -83,5 +83,23 @@
 		$query->bindParam(':name', $product);
 		return $query->execute($data);
 	}
+	public function getProdID($product){
+		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
+		$prodID->bindParam(':name',$product);
+		$prodID->execute();
+		$result=$prodID->fetch();
+		return $result['prodID'];
+	}
+	
+	public function getItems($product){
+		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
+		$prodID->bindParam(':name',$product);
+		$prodID->execute();
+		$ID=$prodID->fetch();
+		$query = $this->connection->prepare("SELECT * FROM Items WHERE prodID=:prodID");
+		$query->bindParam(':prodID', $ID);
+		$query->execute();
+		return $query;
+	}
 }
 ?>	

@@ -30,6 +30,8 @@
 	
 	<!--PHP includes--> 
 		<?php
+		ini_set('display_errors', 1);
+	error_reporting(E_ALL ^ E_NOTICE);
 		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
 		 $data= new dataTest();
 		?>
@@ -51,7 +53,7 @@
              <span class="icon-bar"></span>
              <span class="icon-bar"></span>
            </button>
-          <a class="navbar-brand" href="index.html">OAP Inventory Manager</a>
+          <a class="navbar-brand" href="index.html"><img  id="oapIcon" height="40px" src="oapIconB.jpg"  alt="The best place on Earth">OAP Inventory Manager</a>
         </div>
       </div>
 
@@ -109,7 +111,7 @@
 									$prodName= $product['name'];?>
 								<tr>
                                     <td>
-                                        <a href="#"><?php echo $prodName;?></a>
+                                        <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
 										<span class="badge">4</span>
                                     </td>
                                 </tr>
@@ -134,7 +136,7 @@
 									$prodName= $product['name'];?>
 								<tr>
                                     <td>
-                                        <a href="#"><?php echo $prodName;?></a>
+                                        <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
 										<span class="badge">4</span>
                                     </td>
                                 </tr>
@@ -155,17 +157,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
+                                        <span class="glyphicon glyphicon-usd"></span><a href="#">Sales</a>
                                     </td>
                                 </tr>
                             </table>
@@ -186,6 +178,10 @@
 		function linkCategory($category){
 			console.log("function called");
 			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
+		}
+		function linkProduct($product){
+			console.log("function called");
+			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );  
 		}
 	</script>
 

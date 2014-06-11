@@ -8,10 +8,12 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 	<?php
-		$category= $_POST['Category'];
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL ^ E_NOTICE);
+		$prod= $_POST['Product'];
 	?>	
 
-    <title><?php echo $category; ?></title>
+    <title><?php echo $prod; ?></title>
 
      <!-- Bootstrap core CSS -->
 	<script src="js\jquery-2.1.1.min.js"></script>
@@ -34,7 +36,7 @@
 		<?php
 		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
 		 $data= new dataTest();
-		 $catID=$data->getCatID($category);
+		 $prodID=$data->getProdID($prod);
 		?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -152,46 +154,63 @@
 			</div>
       
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Products</h1>
-		  <h2 class="sub-header"><?php echo $category; ?></h2>
-          <div class="list-group">
-				<?php
-					$prodQuery=$data->getProducts($category);
-					foreach($prodQuery as $product){
-					$prodName= $product['name'];?>
-					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;" class="list-group-item "><? echo $prodName;?><span href="#" onclick="deleteProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right">Remove Product</span></a>
-				<?php } ?>	
-			</div>
-			<!-- Button trigger modal -->
-			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addProductModal">
-				+ Add Product
+          <h1 class="page-header">Items</h1>
+		  <h2 class="sub-header"><?php echo $prod; ?></h2>
+		  <!-- Button trigger modal -->
+			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal">
+				+ Add Items
 			</button>
+		  <table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Product Code</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$prodQuery=$data->getItems($prod);
+					foreach($prodQuery as $product){
+					$prodCode= $product['prodCode'];?>
+					<tr>
+						<td><?php echo $prodCode;?></td>
+					</tr>
+				<?php }?>	
+					<tr>
+						<td>tst0001</td>
+					</tr>
+					<tr>
+						<td>tst0002</td>
+					</tr>
+					<tr>
+						<td>tst0003</td>
+					</tr>
+			</tbody>
+		   </table>
+			
 
 			<!-- Modal -->
-			<div id="addProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div id="addItemsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 			<div class="modal-content">
 	        <div class="modal-header">
 	              <a class="close" data-dismiss="modal">×</a>
-	              <h3>+ Add Product</h3>
+	              <h3>+ Add Items</h3>
 	        </div>
 				<div>
-					<form class="addProduct">
+					<form class="addItems">
 					<fieldset>
 					<div class="modal-body">
 						<ul class="nav nav-list">
-							<li class="nav-header">Product Name</li>
-							<li><input class="input-xlarge" value="" type="text" name="name"></li>
-							<li class="nav-header">3 Letter Abbreviation Code</li>
-							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
+							<li class="nav-header">Number of items</li>
+							<li><input class="input-xlarge" value="" type="text" name="numItems"></li>
 						</ul> 
-						<input type="hidden" name="catID" value=<?php echo $catID;?>>
+						<input type="hidden" name="prodID" value=<?php echo $prodID;?>>
 					</div>
 					</fieldset>
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit">Add Product</button>
+				<button class="btn btn-success" id="submit">Add Items</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
@@ -208,13 +227,13 @@
 		function addToDB() {
 					$.ajax({
 						type: "POST",
-					url: "AddProduct.php",
-					data: $('form.addProduct').serialize(),
+					url: "addItems.php",
+					data: $('form.addItems').serialize(),
 						success: function(data){
 							//alert(data);
 							//console.log($('form.addProduct').serialize());
 							//$("#thanks").html(msg)
-							$("#addProductModal").modal('hide');	
+							$("#addItemsModal").modal('hide');	
 						},
 					error: function(){
 						alert("failure");

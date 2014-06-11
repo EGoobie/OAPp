@@ -9,7 +9,7 @@
 	$dbh=$data->getInstance();
 	echo "got instance";
 	
-	$data->getTest();
+	$data->deleteProduct('testB');
 	
 
 
