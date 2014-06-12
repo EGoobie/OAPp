@@ -104,7 +104,7 @@
 	}
 	
 	public function addItems($itemData){
-		$numItems=$itemData['number']; //check naming on this parameter
+		$numItems=$itemData['numItems']; //check naming on this parameter
 		for($i=0;$i<$numItems;$i++){
 			$query = $this->connection->prepare("INSERT INTO Items (itemID, prodID, numCode, prodCode) VALUES (DEFAULT,:prodID,:numCode, :prodCode)");
 		

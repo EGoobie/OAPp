@@ -176,15 +176,6 @@
 						<td><?php echo $prodCode;?></td>
 					</tr>
 				<?php }?>	
-					<tr>
-						<td>tst0001</td>
-					</tr>
-					<tr>
-						<td>tst0002</td>
-					</tr>
-					<tr>
-						<td>tst0003</td>
-					</tr>
 			</tbody>
 		   </table>
 			
