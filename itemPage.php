@@ -160,6 +160,9 @@
 			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal">
 				+ Add Items
 			</button>
+			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal">
+				- Remove Item
+			</button>
 		  <table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -180,7 +183,7 @@
 		   </table>
 			
 
-			<!-- Modal -->
+			<!-- Modal Add Items -->
 			<div id="addItemsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 			<div class="modal-content">
@@ -235,7 +238,65 @@
 			
 		}
 		</script>
-  
+		
+			<!-- Modal Remove Item -->
+			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			<div class="modal-content">
+	        <div class="modal-header">
+	              <a class="close" data-dismiss="modal">×</a>
+	              <h3>Remove Item</h3>
+	        </div>
+				<div>
+					<form class="removeItem">
+					<fieldset>
+					<div class="modal-body">
+						<ul class="nav nav-list">
+							<li class="nav-header">Enter Product Code</li>
+							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
+						</ul> 
+					</div>
+					</fieldset>
+					</form>
+				</div>
+			<div class="modal-footer">
+				<button class="btn btn-success" id="submit2">Remove Item</button>
+				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+			</div>
+			</div>
+			</div>
+		</div>
+		<script>
+		$(document).ready(function () { 
+			$('#submit2').click(function(e){
+				console.log("in onclick");
+				e.preventDefault();
+				e.stopPropagation();
+				removeFromDB();
+			});
+		});
+		function removeFromDB() {
+					console.log("were in");
+					$.ajax({
+						type: "POST",
+					url: "removeItem.php",
+					data: $('form.removeItem').serialize(),
+						success: function(data){
+							//alert(data);
+							console.log($('form.removeItem').serialize());
+							//$("#thanks").html(msg)
+							$("#removeItemModal").modal('hide');	
+						},
+					error: function(){
+						alert("failure");
+						console.log($('form.removeItem').serialize());
+						console.log("failed");
+					}
+					
+					});
+			
+		}
+		</script>
         </div>
     </div>
 	<script language="javascript">

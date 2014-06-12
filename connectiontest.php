@@ -9,9 +9,9 @@
 	$dbh=$data->getInstance();
 	echo "got instance";
 	
-	$data->addItemsTest('5');
+	//$data->addItemsTest('5');
 	//$data->genNumCode('1');
-	
+	$data->removeItem('sap1');
 
 
 

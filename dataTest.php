@@ -81,7 +81,7 @@
 		$query = $this->connection->prepare("DELETE FROM Products WHERE name = :name");
 
 		$query->bindParam(':name', $product);
-		return $query->execute($data);
+		return $query->execute();
 	}
 	public function getProdID($product){
 		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
@@ -142,6 +142,13 @@
 		$numCodeS=strval($numCode);
 		$prodCode=$prodAbvValue.$numCodeS;
 		return $prodCode;
+	}
+	
+	public function removeItem($prodCode) {
+		$query = $this->connection->prepare("DELETE FROM Items WHERE prodCode = :prodCode");
+
+		$query->bindParam(':prodCode', $prodCode);
+		return $query->execute();
 	}
 }
 ?>	
