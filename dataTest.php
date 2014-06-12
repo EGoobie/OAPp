@@ -78,10 +78,15 @@
 	}
 	
 	public function deleteProduct($product) {
-		$query = $this->connection->prepare("DELETE FROM Products WHERE name = :name");
-
-		$query->bindParam(':name', $product);
-		return $query->execute();
+		$prodID=$this->getProdID($product);
+		$itemDelete = $this->connection->prepare("DELETE FROM Items WHERE prodID = :prodID");
+		$itemDelete->bindParam(':prodID', $prodID);
+		$itemDelete->execute();
+		$prodDelete = $this->connection->prepare("DELETE FROM Products WHERE name = :name");
+		$prodDelete->bindParam(':name', $product);
+		$prodDelete->execute();
+		
+		return;
 	}
 	public function getProdID($product){
 		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
