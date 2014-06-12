@@ -4,7 +4,7 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 
@@ -156,10 +156,27 @@ a: hover {
 	*/
 /*} */
 body{margin-top:50px;}
-.glyphicon { margin-right:10px; }
 .panel-body { padding:0px; }
 .panel-body table tr td { padding-left: 15px }
 .panel-body .table {margin-bottom: 0px; }
+
 #oapIcon{
 	margin-top: -10px;
+	margin-right: 10px;
+}
+@media (max-width: 768px) {
+  #oapIcon{
+	width: 0px;
+	display: none;
+	}
+}
+.btn-danger{
+	margin-top: -5px;
+}
+.panel-group a {
+	margin-left: 20px;
+}
+
+.fa-chevron-down{
+	cursor: pointer;
 }

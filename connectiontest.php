@@ -9,8 +9,11 @@
 	$dbh=$data->getInstance();
 	echo "got instance";
 	
-	$data->deleteProduct('testB');
-	
+	$prodQuery=$data->getItems('Sapporo');
+	foreach($prodQuery as $product){
+		$prodCode= $product['prodCode'];
+		 echo $prodCode;
+	}
 
 
 

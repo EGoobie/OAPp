@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+    <link rel="shortcut icon" href="oapIconB.jpg">
 	<?php
 	ini_set('display_errors', 1);
 	error_reporting(E_ALL ^ E_NOTICE);
@@ -83,7 +83,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-beer"></i>
+                            <i class="fa fa-beer"></i>
                             <a id= "Beverages" href = "#" onclick="linkCategory('Beverages');return false;">Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
@@ -108,7 +108,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-cutlery"></i>
+                            <i class="fa fa-cutlery"></i>
                             <a id="Food" href = "#" onclick="linkCategory('Food');return false;">Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
@@ -133,7 +133,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-file">
+                            <span class="glyphicon glyphicon-file">
                             </span><a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
@@ -168,9 +168,10 @@
 			</thead>
 			<tbody>
 				<?php
-					$prodQuery=$data->getItems($prod);
+					$prodQuery=$data->getItems('Sapporo');
 					foreach($prodQuery as $product){
-					$prodCode= $product['prodCode'];?>
+						$prodCode= $product['prodCode'];
+				?>
 					<tr>
 						<td><?php echo $prodCode;?></td>
 					</tr>

@@ -95,11 +95,12 @@
 		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
 		$prodID->bindParam(':name',$product);
 		$prodID->execute();
-		$ID=$prodID->fetch();
-		$query = $this->connection->prepare("SELECT * FROM Items WHERE prodID=:prodID");
-		$query->bindParam(':prodID', $ID);
-		$query->execute();
-		return $query;
+		$result=$prodID->fetch();
+		$ID= $result['prodID'];
+		$prodCode= $this->connection->prepare("SELECT * FROM Items WHERE prodID=:prodID");
+		$prodCode->bindParam(':prodID',$ID);
+		$prodCode->execute();
+		return $prodCode;
 	}
 }
 ?>	
