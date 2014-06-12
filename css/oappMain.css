@@ -170,7 +170,9 @@ body{margin-top:50px;}
 	display: none;
 	}
 }
-
+.btn-danger{
+	margin-top: -5px;
+}
 .panel-group a {
 	margin-left: 20px;
 }
