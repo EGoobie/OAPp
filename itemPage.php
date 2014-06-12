@@ -168,7 +168,7 @@
 			</thead>
 			<tbody>
 				<?php
-					$prodQuery=$data->getItems('Sapporo');
+					$prodQuery=$data->getItems($prod);
 					foreach($prodQuery as $product){
 						$prodCode= $product['prodCode'];
 				?>
