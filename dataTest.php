@@ -150,5 +150,14 @@
 		$query->bindParam(':prodCode', $prodCode);
 		return $query->execute();
 	}
+	
+	public function getRemaining($prodID){
+		$query = $this->connection->prepare("SELECT count(*) FROM Items WHERE prodID=:prodID");
+		$query->bindParam(':prodID', $prodID);
+		$query->execute();
+		$remaining=$query->fetch();
+		$remItems=$remaining[0];
+		return $remItems;
+	}
 }
 ?>	

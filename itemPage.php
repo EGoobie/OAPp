@@ -13,7 +13,7 @@
 		$prod= $_POST['Product'];
 	?>	
 
-    <title><?php echo $prod; ?></title>
+    <title><?php echo $prod;?></title>
 
      <!-- Bootstrap core CSS -->
 	<script src="js\jquery-2.1.1.min.js"></script>
@@ -36,7 +36,7 @@
 		<?php
 		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
 		 $data= new dataTest();
-		 $prodID=$data->getProdID($prod);
+		 $mainProdID=$data->getProdID($prod);
 		?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -93,11 +93,13 @@
                                 <?php
 								$prodQuery=$data->getProducts('Beverages');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
@@ -118,11 +120,13 @@
                                 <?php
 								$prodQuery=$data->getProducts('Food');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
@@ -155,7 +159,7 @@
       
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Items</h1>
-		  <h2 class="sub-header"><?php echo $prod; ?></h2>
+		  <h2 class="sub-header"><?php echo $prod;?></h2>
 		  <!-- Button trigger modal -->
 			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal">
 				+ Add Items
@@ -199,7 +203,7 @@
 							<li class="nav-header">Number of items</li>
 							<li><input class="input-xlarge" value="" type="text" name="numItems"></li>
 						</ul> 
-						<input type="hidden" name="prodID" value=<?php echo $prodID;?>>
+						<input type="hidden" name="prodID" value=<?php echo $mainProdID;?>>
 					</div>
 					</fieldset>
 					</form>
@@ -226,7 +230,7 @@
 					data: $('form.addItems').serialize(),
 						success: function(data){
 							//alert(data);
-							//console.log($('form.addProduct').serialize());
+							console.log($('form.addProduct').serialize());
 							//$("#thanks").html(msg)
 							$("#addItemsModal").modal('hide');	
 						},

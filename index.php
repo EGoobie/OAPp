@@ -108,11 +108,13 @@
                                 <?php
 								$prodQuery=$data->getProducts('Beverages');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
@@ -133,11 +135,14 @@
                                 <?php
 								$prodQuery=$data->getProducts('Food');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);
+									?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
@@ -170,7 +175,7 @@
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1 class="page-header">Inventory</h1>
 			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal">
-				- Remove Item
+				Remove Item
 			</button>
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

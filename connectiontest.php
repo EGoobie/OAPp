@@ -11,7 +11,9 @@
 	
 	//$data->addItemsTest('5');
 	//$data->genNumCode('1');
-	$data->removeItem('sap1');
+	//$data->removeItem('sap1');
+	$prodCode='1';
+	$data->getRemaining($prodCode);
 
 
 

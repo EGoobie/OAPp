@@ -91,11 +91,13 @@
                                 <?php
 								$prodQuery=$data->getProducts('Beverages');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
@@ -116,11 +118,13 @@
                                 <?php
 								$prodQuery=$data->getProducts('Food');
 								foreach($prodQuery as $product){
-									$prodName= $product['name'];?>
+									$prodName= $product['name'];
+									$prodID= $product['prodID'];
+									$remaining=$data->getRemaining($prodID);?>
 								<tr>
                                     <td>
                                         <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge">4</span>
+										<span class="badge"><?php echo $remaining;?></span>
                                     </td>
                                 </tr>
 								<?php } ?>
