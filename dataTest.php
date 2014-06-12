@@ -102,5 +102,46 @@
 		$prodCode->execute();
 		return $prodCode;
 	}
+	
+	public function addItems($itemData){
+		$numItems=$itemData['number']; //check naming on this parameter
+		for($i=0;$i<$numItems;$i++){
+			$query = $this->connection->prepare("INSERT INTO Items (itemID, prodID, numCode, prodCode) VALUES (DEFAULT,:prodID,:numCode, :prodCode)");
+		
+			$query->bindParam(':prodID', $prodID);
+			$query->bindParam(':numCode', $numCode);
+			$query->bindParam(':prodCode', $prodCode);
+		
+			$passedID=$itemData['prodID'];
+		
+		
+			$prodID= $passedID;
+			$numCode=$this->genNumCode($passedID);
+			$prodCode=$this->genProdCode($passedID,$numCode);
+		
+			$query->execute();
+			echo"item added";
+		}	
+	}
+	
+	public function genNumCode($prodID){
+		$query = $this->connection->prepare("SELECT MAX(numCode) as maxCode FROM Items WHERE prodID=:prodID");
+		$query->bindParam(':prodID', $prodID);
+		$query->execute();
+		$maxCode=$query->fetch();
+		$maxCodeVal=$maxCode['maxCode'];
+		return $maxCodeVal+1;
+	}
+	
+	public function genProdCode($prodID,$numCode){
+		$prodAbv= $this->connection->prepare("SELECT * FROM Products WHERE prodID=:prodID");
+		$prodAbv->bindParam(':prodID',$prodID);
+		$prodAbv->execute();
+		$result=$prodAbv->fetch();
+		$prodAbvValue=$result['prodAbv'];
+		$numCodeS=strval($numCode);
+		$prodCode=$prodAbvValue.$numCodeS;
+		return $prodCode;
+	}
 }
 ?>	

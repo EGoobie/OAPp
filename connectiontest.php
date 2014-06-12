@@ -9,11 +9,9 @@
 	$dbh=$data->getInstance();
 	echo "got instance";
 	
-	$prodQuery=$data->getItems('Sapporo');
-	foreach($prodQuery as $product){
-		$prodCode= $product['prodCode'];
-		 echo $prodCode;
-	}
+	$data->addItemsTest('5');
+	//$data->genNumCode('1');
+	
 
 
 
