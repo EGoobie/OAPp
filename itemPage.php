@@ -161,10 +161,10 @@
           <h1 class="page-header">Items</h1>
 		  <h2 class="sub-header"><?php echo $prod;?></h2>
 		  <!-- Button trigger modal -->
-			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal">
+			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal" id="itemPage">
 				+ Add Items
 			</button>
-			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal">
+			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal" id="itemPage">
 				- Remove Item
 			</button>
 		  <table class="table table-striped table-bordered">
