@@ -204,7 +204,7 @@ button.btn.btn-sm.btn-danger.pull-right {
 
 /* Screen size issue fix */
 @media (min-width: 768px) {
-	.btn-lg, .btn-group-lg>.btn {
+	/* .btn-lg, .btn-group-lg>.btn {
 		padding: 10px 16px;
 		margin: 0 50px;
 		font-size: 18px;
@@ -216,7 +216,7 @@ button.btn.btn-sm.btn-danger.pull-right {
 		padding-bottom: 9px;
 		margin: 40px 50px 20px;
 		border-bottom: 1px solid #eee;
-	}
+	} */
 	
 	.col-sm-3 {
 		width: 30%;
@@ -228,7 +228,7 @@ button.btn.btn-sm.btn-danger.pull-right {
 }
 
 @media (min-width: 992px) {
-	.btn-lg, .btn-group-lg>.btn {
+	/* .btn-lg, .btn-group-lg>.btn {
 		padding: 10px 16px;
 		margin: 0 20px;
 		font-size: 18px;
@@ -240,7 +240,7 @@ button.btn.btn-sm.btn-danger.pull-right {
 		padding-bottom: 9px;
 		margin: 40px 20px 20px;
 		border-bottom: 1px solid #eee;
-	}
+	} */
 	
 	.col-md-2 {
 		width: 25%;
