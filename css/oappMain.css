@@ -201,3 +201,40 @@ button.btn.btn-sm.btn-danger.pull-right {
 .modal-content li.nav-header {
 	margin-top: 5px;
 }
+
+/* Screen size issue fix */
+@media (min-width: 768px) {
+	.btn-lg, .btn-group-lg>.btn {
+		padding: 10px 16px;
+		margin: 0 50px;
+		font-size: 18px;
+		line-height: 1.33;
+		border-radius: 6px;
+	}
+	
+	.page-header {
+		padding-bottom: 9px;
+		margin: 40px 50px 20px;
+		border-bottom: 1px solid #eee;
+	}
+}
+
+@media (min-width: 992px) {
+	.btn-lg, .btn-group-lg>.btn {
+		padding: 10px 16px;
+		margin: 0 20px;
+		font-size: 18px;
+		line-height: 1.33;
+		border-radius: 6px;
+	}
+	
+	.page-header {
+		padding-bottom: 9px;
+		margin: 40px 20px 20px;
+		border-bottom: 1px solid #eee;
+	}
+	
+	.col-md-2 {
+		width: 25%;
+	}
+}
