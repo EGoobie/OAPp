@@ -85,7 +85,7 @@ a: hover {
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 40px;
+    padding-right: 20%;
     padding-left: 40px;
   }
 }
