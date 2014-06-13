@@ -160,23 +160,32 @@ body{margin-top:50px;}
 .panel-body table tr td { padding-left: 15px }
 .panel-body .table {margin-bottom: 0px; }
 
-#oapIcon{
+#oapIcon {
 	margin-top: -10px;
 	margin-right: 10px;
 }
+
 @media (max-width: 768px) {
-  #oapIcon{
+  #oapIcon {
 	width: 0px;
 	display: none;
 	}
 }
-.btn-danger{
-	margin-top: -5px;
-}
+
 .panel-group a {
 	margin-left: 20px;
 }
 
-.fa-chevron-down{
+.fa-chevron-down {
 	cursor: pointer;
+}
+
+#itemPage {
+	margin: 0 15px 15px 0;
+}
+
+button.btn.btn-sm.btn-danger.pull-right {
+	position: relative;
+	right: 10px;
+	bottom: 30px;
 }

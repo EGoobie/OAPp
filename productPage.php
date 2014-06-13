@@ -164,7 +164,7 @@
 					$prodQuery=$data->getProducts($mainCategory);
 					foreach($prodQuery as $product){
 					$prodName= $product['name'];?>
-					<a href="#" class="list-group-item"> <!--onclick="linkProduct('<? //echo $prodName;?>');return false;"--> <? echo $prodName;?><button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button></a>
+					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?><button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button></a>
 				<?php } ?>	
 			</div>
 			<!-- Button trigger modal -->
