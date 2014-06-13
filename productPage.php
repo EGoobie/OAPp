@@ -71,18 +71,18 @@
           <div class="panel-group" id="accordion">
 				<div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="active">
+                        <h4 id="Overview" class="panel-title">
                             <i class="fa fa-home"></i>
-                            </span><a href ="index.php">Overview</a> </a>
+                            <a href ="index.php">Overview</a> </a>
                         </h4>
                     </div>
                     
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 id="Beverages" class="panel-title">
                             <i class="fa fa-beer"></i>
-                            <a id= "Beverages" href = "#" onclick="linkCategory('Beverages');return false;">Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
+                            <a href = "#"  onclick="linkCategory('Beverages');return false;">Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
@@ -107,9 +107,9 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 id="Food" class="panel-title">
                             <i class="fa fa-cutlery"></i>
-                            <a id="Food" href = "#" onclick="linkCategory('Food');return false;">Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
+                            <a target="Food" href = "#" onclick="linkCategory('Food');return false;">Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -231,7 +231,16 @@
   
         </div>
     </div>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+			console.log("in function");
+			var currCat = '<?php echo $category;?>';
+			console.log(currCat);
+			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
+		});
+	</script>	
 	<script language="javascript">
+		
 		function linkCategory($category){
 			console.log("function called");
 			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
