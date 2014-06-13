@@ -189,3 +189,12 @@ button.btn.btn-sm.btn-danger.pull-right {
 	right: 10px;
 	bottom: 35px;
 }
+
+.modal-content div h4 {
+	margin: 10px 10px 10px 10px;
+	text-align: justify;
+}
+
+.modal-content li.nav-header {
+	margin-top: 5px;
+}
