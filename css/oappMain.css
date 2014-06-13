@@ -180,19 +180,22 @@ body{margin-top:50px;}
 	cursor: pointer;
 }
 
+/* Item Page buttons */
 #itemPage {
 	margin: 0 15px 15px 0;
 }
 
+/* Remove product button */
 button.btn.btn-sm.btn-danger.pull-right {
 	position: relative;
 	right: 10px;
 	bottom: 35px;
 }
 
+/* Pop-up Content */
 .modal-content div h4 {
 	margin: 10px 10px 10px 10px;
-	text-align: justify;
+	text-align: left;
 }
 
 .modal-content li.nav-header {
