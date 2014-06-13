@@ -35,6 +35,7 @@
 		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
 		 $data= new dataTest();
 		 $catID=$data->getCatID($mainCategory);
+		 $storedProduct;
 		?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -163,7 +164,7 @@
 					$prodQuery=$data->getProducts($mainCategory);
 					foreach($prodQuery as $product){
 					$prodName= $product['name'];?>
-					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;" class="list-group-item "><? echo $prodName;?><button href="#" onclick="deleteProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right">Remove Product</button></a>
+					<a href="#" class="list-group-item"> <!--onclick="linkProduct('<? //echo $prodName;?>');return false;"--> <? echo $prodName;?><button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button></a>
 				<?php } ?>	
 			</div>
 			<!-- Button trigger modal -->
@@ -171,7 +172,7 @@
 				+ Add Product
 			</button>
 
-			<!-- Modal -->
+			<!-- Modal Add Product -->
 			<div id="addProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 			<div class="modal-content">
@@ -229,19 +230,51 @@
 			
 		}
 		</script>
-  
+		
+		<!-- Modal Delete Product Warning -->
+			<div id="deleteProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			<div class="modal-content">
+	        <div class="modal-header">
+	              <a class="close" data-dismiss="modal">×</a>
+	              <h3>Warning</h3>
+	        </div>
+				<div>
+					
+				<h4>There are items remaining in stock for this product. Deleting this product will also remove all remaining items. Are you sure you want to delete this product? <h4>
+						
+					
+				</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger" id="submit1" onclick="deleteProduct(getStoredProduct());return false;">Delete Product</button>
+				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+			</div>
+			</div>
+			</div>
+		</div>
         </div>
     </div>
+	
 	<script type="text/javascript">
-	jQuery(document).ready(function($){
-			console.log("in function");
+		jQuery(document).ready(function($){
+			//console.log("in function");
 			var currCat = '<?php echo $mainCategory;?>';
-			console.log(currCat);
+			//console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
 	</script>	
 	<script language="javascript">
+		var storedProduct;
+		function storeProduct($product){
+			storedProduct=$product;
+			return;
+		}
 		
+		function getStoredProduct(){
+			console.log(storedProduct);
+			return storedProduct;
+		}
+			
 		function linkCategory($category){
 			console.log("function called");
 			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
@@ -257,7 +290,7 @@
 			//add in warning message
 			$.post('deleteProduct.php', {'Product': $product});
 			//use ajax to update page
-			linkCategory('<?php $mainCategory; ?>');
+			linkCategory('<?php echo $mainCategory;?>');
 		}
 	</script>
   </body>
