@@ -289,7 +289,8 @@
 							//alert(data);
 							console.log($('form.removeItem').serialize());
 							//$("#thanks").html(msg)
-							$("#removeItemModal").modal('hide');	
+							$("#removeItemModal").modal('hide');
+							linkProduct('<?php echo $prod;?>');
 						},
 					error: function(){
 						alert("failure");

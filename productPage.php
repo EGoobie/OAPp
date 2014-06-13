@@ -8,10 +8,10 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="oapIconB.jpg">
 	<?php
-		$category= $_POST['Category'];
+		$mainCategory= $_POST['Category'];
 	?>	
 
-    <title><?php echo $category; ?></title>
+    <title><?php echo $mainCategory; ?></title>
 
      <!-- Bootstrap core CSS -->
 	<script src="js\jquery-2.1.1.min.js"></script>
@@ -34,7 +34,7 @@
 		<?php
 		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
 		 $data= new dataTest();
-		 $catID=$data->getCatID($category);
+		 $catID=$data->getCatID($mainCategory);
 		?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -157,13 +157,13 @@
       
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Products</h1>
-		  <h2 class="sub-header"><?php echo $category; ?></h2>
-          <div class="list-group">
+		  <h2 class="sub-header"><?php echo $mainCategory; ?></h2>
+          <div id="prodList" class="list-group">
 				<?php
-					$prodQuery=$data->getProducts($category);
+					$prodQuery=$data->getProducts($mainCategory);
 					foreach($prodQuery as $product){
 					$prodName= $product['name'];?>
-					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;" class="list-group-item "><? echo $prodName;?><span href="#" onclick="deleteProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right">Remove Product</span></a>
+					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;" class="list-group-item "><? echo $prodName;?><button href="#" onclick="deleteProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right">Remove Product</button></a>
 				<?php } ?>	
 			</div>
 			<!-- Button trigger modal -->
@@ -218,7 +218,8 @@
 							//alert(data);
 							//console.log($('form.addProduct').serialize());
 							//$("#thanks").html(msg)
-							$("#addProductModal").modal('hide');	
+							$("#addProductModal").modal('hide');
+							linkCategory('<?php echo $mainCategory;?>');							
 						},
 					error: function(){
 						alert("failure");
@@ -234,7 +235,7 @@
 	<script type="text/javascript">
 	jQuery(document).ready(function($){
 			console.log("in function");
-			var currCat = '<?php echo $category;?>';
+			var currCat = '<?php echo $mainCategory;?>';
 			console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
@@ -256,6 +257,7 @@
 			//add in warning message
 			$.post('deleteProduct.php', {'Product': $product});
 			//use ajax to update page
+			linkCategory('<?php $mainCategory; ?>');
 		}
 	</script>
   </body>
