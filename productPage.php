@@ -157,8 +157,8 @@
 			</div>
       
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Products</h1>
-		  <h2 class="sub-header"><?php echo $mainCategory; ?></h2>
+          <h1 class="page-header"><?php echo $mainCategory; ?></h1>
+		  <h2 class="sub-header">Products</h2>
           <div id="prodList" class="list-group">
 				<?php
 					$prodQuery=$data->getProducts($mainCategory);

@@ -158,8 +158,8 @@
 			</div>
       
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Items</h1>
-		  <h2 class="sub-header"><?php echo $prod;?></h2>
+          <h1 class="page-header"><?php echo $prod;?></h1>
+		  <h2 class="sub-header">Items</h2>
 		  <!-- Button trigger modal -->
 			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal" id="itemPage">
 				+ Add Items

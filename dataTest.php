@@ -46,7 +46,8 @@
 		//$prodID=$prodData['prodID'];
 		$catID= $prodData['catID'];
 		$name=$prodData['name'];
-		$prodAbv=$prodData['prodAbv'];
+		$prodAbvCaps=$prodData['prodAbv'];
+		$prodAbv=strtoupper($prodAbvCaps);
 		
 		$query->execute();
 		echo"product added";
@@ -78,7 +79,15 @@
 	}
 	
 	public function deleteProduct($product) {
-		$prodID=$this->getProdID($product);
+		$prodInfo= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
+		$prodInfo->bindParam(':name',$product);
+		$prodInfo->execute();
+		$result=$prodInfo->fetch();
+		
+		$prodID=$result['prodID'];
+		$catID=$result['catID'];
+		$prodAbv=$result['prodAbv'];
+		
 		$itemDelete = $this->connection->prepare("DELETE FROM Items WHERE prodID = :prodID");
 		$itemDelete->bindParam(':prodID', $prodID);
 		$itemDelete->execute();
@@ -86,8 +95,15 @@
 		$prodDelete->bindParam(':name', $product);
 		$prodDelete->execute();
 		
-		return;
+		$archive=$this->connection->prepare("INSERT INTO RemovedProducts (prodID, catID, name, prodAbv) VALUES (:prodID,:catID,:name, :prodAbv)");
+		$archive->bindParam(':prodID', $prodID);
+		$archive->bindParam(':catID', $catID);
+		$archive->bindParam(':name', $product);
+		$archive->bindParam(':prodAbv', $prodAbv);
+		
+		return $archive->execute();
 	}
+	
 	public function getProdID($product){
 		$prodID= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
 		$prodID->bindParam(':name',$product);
@@ -150,10 +166,29 @@
 	}
 	
 	public function removeItem($prodCode) {
-		$query = $this->connection->prepare("DELETE FROM Items WHERE prodCode = :prodCode");
-
-		$query->bindParam(':prodCode', $prodCode);
-		return $query->execute();
+		$product=$this->connection->prepare("SELECT * FROM Items WHERE prodCode= :prodCode");
+		$prodCodeCaps=strtoupper($prodCode);
+		$product->bindParam(':prodCode', $prodCodeCaps);
+		$product->execute();
+		$prodInfo=$product->fetch();
+		
+		$delete = $this->connection->prepare("DELETE FROM Items WHERE prodCode = :prodCode");
+		$delete->bindParam(':prodCode', $prodCodeCaps);
+		$delete->execute();
+		
+		$archive=$this->connection->prepare("INSERT INTO RemovedItems (itemID, prodID, prodCode, timestamp) VALUES (:itemID,:prodID,:prodCode, now())");
+		
+		$itemID=$prodInfo['itemID'];
+		$prodID=$prodInfo['prodID'];
+		$prodCode=$prodInfo['prodCode'];
+		//$timestamp=now();
+		
+		$archive->bindParam(':itemID',$itemID);
+		$archive->bindParam(':prodID',$prodID);
+		$archive->bindParam(':prodCode',$prodCode);
+		//$archive->bindParam(':timestamp,$timestamp');
+		
+		return $archive->execute();
 	}
 	
 	public function getRemaining($prodID){
