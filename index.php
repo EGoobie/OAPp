@@ -25,10 +25,11 @@
 	<script src="js\accordion.js"></script>
 	<script src="js\collapse.js"></script>
 	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
+
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-	
-	<!--PHP includes--> 
+
+	<!--PHP includes-->
 		<?php
 		ini_set('display_errors', 1);
 	error_reporting(E_ALL ^ E_NOTICE);
@@ -36,7 +37,7 @@
 		 $data= new dataTest();
 		 $category="Overview";
 		?>
-	 
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -44,7 +45,7 @@
     <![endif]-->
   </head>
 
-  <body>	 
+  <body>
      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
 		 <div class="navbar-header">
@@ -61,18 +62,18 @@
     </div>
 
     <div class="container-fluid" id="sidebar" role="navigation">
-	
+
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
-				
+
 				<!--<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">Overview</a></li>
 				</ul>
-				<ul class="nav nav-sidebar" id="accordion"> 
+				<ul class="nav nav-sidebar" id="accordion">
 					<?php
 						//$catQuery=$data->getCategories();
 						//foreach($catQuery as $category){
-							//$catName= $category['category'];?> 
+							//$catName= $category['category'];?>
 						<li><div><a href="#"><?php //echo $catName;?></a><a href="#"><span class="glyphicon glyphicon-chevron-down pull-right"></span></a></div>
 						<ul>
 							<?php
@@ -80,12 +81,12 @@
 								//foreach($prodQuery as $product){
 									//$prodName= $product['name'];?>
 									<li><a href="#"><?php //echo $prodName;?></a></li>
-							<?php //} ?>		
+							<?php //} ?>
 						</ul>
 						</li>
 						<?php //} ?>
 				</ul>-->
-				
+
 				<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
                     <div class="panel-heading">
@@ -94,7 +95,7 @@
                             </span><a href ="#">Overview</a> </a>
                         </h4>
                     </div>
-                    
+
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -178,6 +179,9 @@
 			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal">
 				Remove Item
 			</button>
+
+      <div id="remBeverages" class="col-md-12"></div>
+
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -193,21 +197,22 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">Enter Product Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
-						</ul> 
+						</ul>
 					</div>
 					</fieldset>
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit">Remove Item</button>
+				<button class="btn btn-success" id="submit2">Remove Item</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
 			</div>
 		</div>
+
 		<script>
-		$(document).ready(function () { 
-			$('#submit').click(function(e){
+		$(document).ready(function () {
+			$('#submit2').click(function(e){
 				console.log("in onclick");
 				e.preventDefault();
 				e.stopPropagation();
@@ -224,21 +229,21 @@
 							//alert(data);
 							console.log($('form.removeItem').serialize());
 							//$("#thanks").html(msg)
-							$("#removeItemModal").modal('hide');	
+							$("#removeItemModal").modal('hide');
 						},
 					error: function(){
 						alert("failure");
 						console.log($('form.removeItem').serialize());
 						console.log("failed");
 					}
-					
+
 					});
-			
+
 		}
 		</script>
-		</div>   
+		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 	jQuery(document).ready(function($){
 			console.log("in function");
@@ -246,23 +251,26 @@
 			console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
-	</script>	
-	
+	</script>
+
 	<script language="javascript">
 		function linkCategory($category){
 			console.log("function called");
-			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
+			$.redirect('productPage.php', { 'Category': $category}, 'POST' );
 		}
 		function linkProduct($product){
 			console.log("function called");
-			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );  
+			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );
 		}
+
 	</script>
+
+    <?php include($_SERVER['DOCUMENT_ROOT']."/chartManager.php"); ?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-   
+
     <!-- <script src="js/bootstrap.min.js"></script> -->
 
     <!--<script src="js\docs.min.js"></script>-->
