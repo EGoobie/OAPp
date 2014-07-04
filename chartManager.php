@@ -1,4 +1,3 @@
-<script src="js\jquery-2.1.1.min.js"></script>
   <script src="js\highcharts.js"></script>
   <!--<script src="js\dark-unica.js"></script>-->
   <script src="js\exporting.js"></script>

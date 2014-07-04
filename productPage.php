@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="oapIconB.jpg">
 	<?php
 		$mainCategory= $_POST['Category'];
-	?>	
+	?>
 
     <title><?php echo $mainCategory; ?></title>
 
@@ -29,11 +29,11 @@
 	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-	
-	<!--PHP includes--> 
+
+	<!--PHP includes-->
 		<?php
-		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
-		 $data= new dataTest();
+		 require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
+		 $data= new dataManager();
 		 $catID=$data->getCatID($mainCategory);
 		 $storedProduct;
 		?>
@@ -77,7 +77,7 @@
                             <a href ="index.php">Overview</a> </a>
                         </h4>
                     </div>
-                    
+
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -155,7 +155,7 @@
             </div>
 			</div>
 			</div>
-      
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><?php echo $mainCategory; ?></h1>
 		  <h2 class="sub-header">Products</h2>
@@ -166,7 +166,7 @@
 					$prodName= $product['name'];?>
 					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?></a>
 					<button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button>
-				<?php } ?>	
+				<?php } ?>
 			</div>
 			<!-- Button trigger modal -->
 			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addProductModal">
@@ -190,7 +190,7 @@
 							<li><input class="input-xlarge" value="" type="text" name="name"></li>
 							<li class="nav-header">3 Letter Abbreviation Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
-						</ul> 
+						</ul>
 						<input type="hidden" name="catID" value=<?php echo $catID;?>>
 					</div>
 					</fieldset>
@@ -204,7 +204,7 @@
 			</div>
 		</div>
 		<script>
-		$(document).ready(function () { 
+		$(document).ready(function () {
 			$('#submit').click(function(e){
 				e.preventDefault();
 				e.stopPropagation();
@@ -221,17 +221,17 @@
 							//console.log($('form.addProduct').serialize());
 							//$("#thanks").html(msg)
 							$("#addProductModal").modal('hide');
-							linkCategory('<?php echo $mainCategory;?>');							
+							linkCategory('<?php echo $mainCategory;?>');
 						},
 					error: function(){
 						alert("failure");
 					}
-					
+
 					});
-			
+
 		}
 		</script>
-		
+
 		<!-- Modal Delete Product Warning -->
 			<div id="deleteProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -241,10 +241,10 @@
 	              <h3>Warning</h3>
 	        </div>
 				<div>
-					
+
 				<h4>There are items remaining in stock for this product. Deleting this product will also remove all remaining items. Are you sure you want to delete this product? <h4>
-						
-					
+
+
 				</div>
 			<div class="modal-footer">
 				<button class="btn btn-danger" id="submit1" onclick="deleteProduct(getStoredProduct());return false;">Delete Product</button>
@@ -255,7 +255,7 @@
 		</div>
         </div>
     </div>
-	
+
 	<script type="text/javascript">
 		jQuery(document).ready(function($){
 			//console.log("in function");
@@ -263,29 +263,29 @@
 			//console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
-	</script>	
+	</script>
 	<script language="javascript">
 		var storedProduct;
 		function storeProduct($product){
 			storedProduct=$product;
 			return;
 		}
-		
+
 		function getStoredProduct(){
 			console.log(storedProduct);
 			return storedProduct;
 		}
-			
+
 		function linkCategory($category){
 			console.log("function called");
-			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
+			$.redirect('productPage.php', { 'Category': $category}, 'POST' );
 		}
-		
+
 		function linkProduct($product){
 			console.log("function called");
-			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );  
+			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );
 		}
-		
+
 		function deleteProduct($product){
 			console.log("function called");
 			//add in warning message

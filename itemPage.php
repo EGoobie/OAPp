@@ -11,7 +11,7 @@
 	ini_set('display_errors', 1);
 	error_reporting(E_ALL ^ E_NOTICE);
 		$prod= $_POST['Product'];
-	?>	
+	?>
 
     <title><?php echo $prod;?></title>
 
@@ -31,11 +31,11 @@
 	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-	
-	<!--PHP includes--> 
+
+	<!--PHP includes-->
 		<?php
-		 require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
-		 $data= new dataTest();
+		 require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
+		 $data= new dataManager();
 		 $mainProdID=$data->getProdID($prod);
 		?>
 
@@ -78,7 +78,7 @@
                             <a href ="index.php">Overview</a> </a>
                         </h4>
                     </div>
-                    
+
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -156,7 +156,7 @@
             </div>
 			</div>
 			</div>
-      
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><?php echo $prod;?></h1>
 		  <h2 class="sub-header">Items</h2>
@@ -182,10 +182,10 @@
 					<tr>
 						<td><?php echo $prodCode;?></td>
 					</tr>
-				<?php }?>	
+				<?php }?>
 			</tbody>
 		   </table>
-			
+
 
 			<!-- Modal Add Items -->
 			<div id="addItemsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -202,7 +202,7 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">Number of items</li>
 							<li><input class="input-xlarge" value="" type="text" name="numItems"></li>
-						</ul> 
+						</ul>
 						<input type="hidden" name="prodID" value=<?php echo $mainProdID;?>>
 					</div>
 					</fieldset>
@@ -216,7 +216,7 @@
 			</div>
 		</div>
 		<script>
-		$(document).ready(function () { 
+		$(document).ready(function () {
 			$('#submit').click(function(e){
 				e.preventDefault();
 				e.stopPropagation();
@@ -232,17 +232,17 @@
 							//alert(data);
 							console.log($('form.addProduct').serialize());
 							//$("#thanks").html(msg)
-							$("#addItemsModal").modal('hide');	
+							$("#addItemsModal").modal('hide');
 						},
 					error: function(){
 						alert("failure");
 					}
-					
+
 					});
-			
+
 		}
 		</script>
-		
+
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -258,7 +258,7 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">Enter Product Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
-						</ul> 
+						</ul>
 					</div>
 					</fieldset>
 					</form>
@@ -271,7 +271,7 @@
 			</div>
 		</div>
 		<script>
-		$(document).ready(function () { 
+		$(document).ready(function () {
 			$('#submit2').click(function(e){
 				console.log("in onclick");
 				e.preventDefault();
@@ -297,14 +297,14 @@
 						console.log($('form.removeItem').serialize());
 						console.log("failed");
 					}
-					
+
 					});
-			
+
 		}
 		</script>
         </div>
     </div>
-	
+
 	<script type="text/javascript">
 	jQuery(document).ready(function($){
 			console.log("in function");
@@ -312,18 +312,18 @@
 			console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
-	</script>	
+	</script>
 	<script language="javascript">
 		function linkCategory($category){
 			console.log("function called");
-			$.redirect('productPage.php', { 'Category': $category}, 'POST' );  
+			$.redirect('productPage.php', { 'Category': $category}, 'POST' );
 		}
-		
+
 		function linkProduct($product){
 			console.log("function called");
-			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );  
+			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );
 		}
-		
+
 		function deleteProduct($product){
 			console.log("function called");
 			//add in warning message
