@@ -26,8 +26,10 @@
 	<script src="js\collapse.js"></script>
 	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <!--Chart js files-->
+  <script src="js\highcharts.js"></script>
+  <script src="js\exporting.js"></script>
+  <script src="chartManTest.js"></script>
 
 	<!--PHP includes-->
 		<?php
@@ -181,6 +183,7 @@
 			</button>
 
       <div id="remBeverages" class="col-md-12"></div>
+      <div id="remFood" class="col-md-12"></div>
 
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -265,7 +268,7 @@
 
 	</script>
 
-    <?php include($_SERVER['DOCUMENT_ROOT']."/chartManager.php"); ?>
+    <?php //include($_SERVER['DOCUMENT_ROOT']."/chartManager.php"); ?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

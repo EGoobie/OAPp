@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
 
-  <head>
-
-  <div id="remBeverages" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <?php
 	ini_set('display_errors', 1);
 	error_reporting(E_ALL ^ E_NOTICE);
-	require($_SERVER['DOCUMENT_ROOT']."/dataTest.php");
+	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
 	//echo $_SERVER['DOCUMENT_ROOT'];
 	//echo "include";
-	$data= new dataTest();
+	$data= new dataManager();
 	//echo ", good constructor";
 	$dbh=$data->getInstance();
-  include($_SERVER['DOCUMENT_ROOT']."/chartManager.php");
+  //include($_SERVER['DOCUMENT_ROOT']."/chartManager.php");
 	//echo "got instance";
 
 	//$data->addItemsTest('5');
@@ -23,8 +18,9 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
+  $json=$data->prepRemainingChart('1');
 
-
+  echo $json;
 
 
 
@@ -110,5 +106,3 @@
 		}*/
 ?>
 
-   </head>
-</html>

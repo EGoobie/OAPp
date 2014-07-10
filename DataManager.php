@@ -209,7 +209,7 @@
     $products->bindParam(':catID', $catID);
     $products->execute();
     //$remProducts=$products->fetch();
-    $data='';
+    $data=array();
     foreach($products as $prod){
       $prodID=$prod['prodID'];
       //echo $prodID;
@@ -217,12 +217,17 @@
       //echo $remaining;
       $name=$prod['name'];
       //echo $name;
-      $data[]="{ name: "."'". $name."'" . ", data: "."[". $remaining."] }";
-
+      //$data[]="{ name: "."'". $name."'" . ", data: "."[". $remaining."] }";
+      $data[]=array('name'=>$name,'data'=>array($remaining));
     }
-
-    echo implode(",\n ",$data);
-    return;
+    //change json encode here and in the other place before attempting
+    //$dataTwo=array();
+    //$dataTwo[0]=>$data;
+    $json2=json_encode($data, JSON_NUMERIC_CHECK);
+    //$json2 = preg_replace('/"([^"]+)"\s*:\s*/', '$1:', $json);
+    echo $json2;
+    //implode(",\n ",$data)
+    //return;
   }
 }
 ?>
