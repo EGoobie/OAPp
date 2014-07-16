@@ -78,6 +78,42 @@
 		return $result['catID'];
 	}
 
+  public function getCatFromProd($prodID){
+    $catID= $this->connection->prepare("SELECT * FROM Products WHERE prodID=:prodID");
+		$catID->bindParam(':prodID',$prodID);
+		$catID->execute();
+    $result=$catID->fetch();
+    if(! $result){
+      $catID= $this->connection->prepare("SELECT * FROM RemovedProducts WHERE prodID=:prodID");
+		  $catID->bindParam(':prodID',$prodID);
+		  $catID->execute();
+      $result2=$catID->fetch();
+		  return $result2['catID'];
+    }
+    else{
+		  //$result=$catID->fetch();
+		  return $result['catID'];
+    }
+  }
+
+  public function getName($prodID){
+    $prod= $this->connection->prepare("SELECT * FROM Products WHERE prodID=:prodID");
+		$prod->bindParam(':prodID',$prodID);
+		$prod->execute();
+    $result=$prod->fetch();
+    if(! $result){
+      $prod= $this->connection->prepare("SELECT * FROM RemovedProducts WHERE prodID=:prodID");
+		  $prod->bindParam(':prodID',$prodID);
+		  $prod->execute();
+      $result2=$prod->fetch();
+		  return $result2['name'];
+    }
+    else{
+		  //$result=$catID->fetch();
+		  return $result['name'];
+    }
+  }
+
 	public function deleteProduct($product) {
 		$prodInfo= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
 		$prodInfo->bindParam(':name',$product);
@@ -228,6 +264,111 @@
     echo $json2;
     //implode(",\n ",$data)
     //return;
+  }
+
+  public function getTimestamp($prodCode){
+    $products=$this->connection->prepare("SELECT * FROM RemovedItems WHERE prodCode= :prodCode");
+    $products->bindParam(':prodCode', $prodCode);
+    $products->execute();
+    $timestamp=$products->fetch();
+    $timestamp1=$timestamp['timestamp'];
+    return strtotime($timestamp1);
+    //var_dump($timestamp1);
+  }
+
+  public function prepTimelineChart($days, $catID){
+    $currTime= time();
+    $daysInMs=$days*24*60*60;
+    $timeCutoff=$currTime-$daysInMs;
+
+    //get removed items
+    $remItems=$this->connection->prepare("SELECT * FROM  RemovedItems ORDER BY  timestamp ASC");
+    //$remItems=$this->connection->prepare("SELECT * FROM RemovedItems");
+    //$remItems->bindParam(':prodCode', $prodCode);
+    $remItems->execute();
+    $remItems1=$remItems->fetchAll();
+
+    //collect all removed items of the desired category
+    $itemsInCat=array();
+    foreach($remItems1 as $item){
+      $prodID=$item['prodID'];
+      if($this->getCatFromProd($prodID)==$catID){
+        $itemsInCat[]=$item;
+      }
+    }
+
+    //collect all items removed in the timespan
+    $itemsInTimespan=array();
+    foreach($itemsInCat as $item){
+      $timeOfRem=$item['timestamp'];
+      $timestampOfRem=strtotime($timeOfRem);
+      if($timestampOfRem > $timeCutoff){
+        $itemsInTimespan[]=$item;
+      }
+    }
+
+    //create array of unique products in set
+    $products=array();
+    foreach($itemsInTimespan as $prod){
+      $prodID=$prod['prodID'];
+      if(! in_array($prodID,$products)){
+        $products[]=$prodID;
+      }
+    }
+
+    $mainData=array();
+    foreach($products as $product){
+      //get name of product
+      $prodCodeCheck=$product;
+      //echo $prodCodeCheck. ", ";
+      $name=$this->getName($product);
+      //create data array
+      $data=array();
+      //set first time
+      $firstTime= 0;
+      $count=1;
+
+      foreach($itemsInTimespan as $item){
+        //all this neeeds to be in an if statement
+        $itemProdCode=$item['prodID'];
+        //echo $itemProdCode. " ";
+        if($itemProdCode==$prodCodeCheck){
+          //if timestamp is within a min of first time, increment count and save over previous
+          $time=$item['timestamp'];
+          $timestamp=strtotime($time);
+
+          //echo $firstTime. ", ".$timestamp;
+          //echo "end";
+          if($firstTime==0){
+            //check if you need time or timestamp
+            //echo "were here";
+            $count=1;
+            $jsTime=$timestamp*1000;
+            $data[]=array($jsTime,0,$count);
+            $firstTime=$timestamp;
+          }
+          else if($timestamp<($firstTime+(60))){
+            $count++;
+            end($data);
+            $last_id=key($data);
+            $jsTime=$timestamp*1000;
+            $data[$last_id]=array($jsTime,0,$count);
+          }
+
+          else{
+            $count=1;
+            $jsTime=$timestamp*1000;
+            $data[]=array($jsTime,0,$count);
+            $firstTime=$timestamp;
+          }
+        }
+      }
+
+      $mainData[]=array('name'=>$name,'data'=>$data);
+    }
+
+    $json=json_encode($mainData, JSON_NUMERIC_CHECK);
+    echo $json;
   }
 }
 ?>

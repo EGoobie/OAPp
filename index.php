@@ -28,8 +28,9 @@
 
   <!--Chart js files-->
   <script src="js\highcharts.js"></script>
+  <script src="js\highcharts-more.js"></script>
   <script src="js\exporting.js"></script>
-  <script src="chartManTest.js"></script>
+  <script src="chartManager.js"></script>
 
 	<!--PHP includes-->
 		<?php
@@ -182,6 +183,7 @@
 				Remove Item
 			</button>
 
+      <div id="timeline" class="col-md-12"></div>
       <div id="remBeverages" class="col-md-12"></div>
       <div id="remFood" class="col-md-12"></div>
 

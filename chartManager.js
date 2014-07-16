@@ -1,6 +1,6 @@
 
   $(document).ready(function () {
-     $.getJSON('remainingChart.php', {"catID": '1',"chartType": 'remaining'}, function(data) {
+     $.getJSON('getChartData.php', {"catID": '1',"chartType": 'remaining'}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'remBeverages',
@@ -49,11 +49,11 @@
                 }
             },
           series: data
-        })
+        });
 
       });
 
-      $.getJSON('remainingChart.php', {"catID": '2',"chartType": 'remaining'}, function(data) {
+      $.getJSON('getChartData.php', {"catID": '2',"chartType": 'remaining'}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'remFood',
@@ -102,9 +102,60 @@
                 }
             },
           series: data
-        })
+        });
 
       });
 
+    Highcharts.setOptions({
+      global: {
+        useUTC: false
+      }
     });
 
+    $.getJSON('getChartData.php', {"catID": '1',"chartType": 'timeline',"days":'35'}, function(data) {
+        remainingChart = new Highcharts.Chart( {
+            chart: {
+              renderTo:'timeline',
+                type: 'bubble',
+                zoomType:"xy"
+            },
+
+            yAxis: {
+                lineWidth: 0,
+               minorGridLineWidth: 0,
+                  lineColor: 'transparent',
+                labels: {
+                      enabled: false
+                   },
+               minorTickLength: 0,
+               tickLength: 0,
+             title:{ text:''}
+            },
+
+          xAxis: {
+                type: 'datetime',
+
+                title: {
+                    text: 'Time'
+                }
+            },
+
+           tooltip: {
+               headerFormat: '<b>{series.name}</b><br>',
+               pointFormat: 'Items Removed: {point.z}'
+
+           },
+           credits: {
+              enabled: false
+            },
+
+	        title: {
+	    	    text: 'Timeline of Beverage Item Removal'
+	        },
+          series: data
+
+        });
+
+    });
+
+ });

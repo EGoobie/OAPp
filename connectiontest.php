@@ -18,9 +18,11 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
-  $json=$data->prepRemainingChart('1');
-
-  echo $json;
+  $data->prepTimelineChart('30','1');
+  //$data->prepTimelineChart('1','1');
+  //foreach($json as $poop){
+  //  echo $poop;
+  //}
 
 
 
