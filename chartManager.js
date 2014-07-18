@@ -132,14 +132,17 @@
              title:{ text:''}
             },
 
-          xAxis: {
+            xAxis: {
                 type: 'datetime',
 
                 title: {
                     text: 'Time'
                 }
             },
-
+            subtitle: {
+              align: 'left',
+              text: 'Click and drag or pinch to zoom'
+            },
            tooltip: {
                headerFormat: '<b>{series.name}</b><br>',
                pointFormat: 'Items Removed: {point.z}'
@@ -158,4 +161,60 @@
 
     });
 
+    timeLineChartGen(1);
  });
+
+  function updateTimeline(days){
+    timeLineChartGen(days);
+  }
+
+  function timeLineChartGen(days){
+    $.getJSON('getChartData.php', {"catID": '1',"chartType": 'timeline',"days": days}, function(data) {
+        remainingChart = new Highcharts.Chart( {
+            chart: {
+              renderTo:'timeline',
+                type: 'bubble',
+                zoomType:"xy"
+            },
+
+            yAxis: {
+                lineWidth: 0,
+               minorGridLineWidth: 0,
+                  lineColor: 'transparent',
+                labels: {
+                      enabled: false
+                   },
+               minorTickLength: 0,
+               tickLength: 0,
+             title:{ text:''}
+            },
+
+            xAxis: {
+                type: 'datetime',
+
+                title: {
+                    text: 'Time'
+                }
+            },
+            subtitle: {
+              align: 'left',
+              text: 'Click and drag or pinch to zoom'
+            },
+           tooltip: {
+               headerFormat: '<b>{series.name}</b><br>',
+               pointFormat: 'Items Removed: {point.z}'
+
+           },
+           credits: {
+              enabled: false
+            },
+
+	        title: {
+	    	    text: 'Timeline of Beverage Item Removal'
+	        },
+          series: data
+
+        });
+
+    });
+  }

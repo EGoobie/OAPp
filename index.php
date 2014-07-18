@@ -183,7 +183,21 @@
 				Remove Item
 			</button>
 
-      <div id="timeline" class="col-md-12"></div>
+      <div id="timelineChart">
+        <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+            <span class="Timespan">Last day</span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <li><a href="#" onclick="updateTimeline('1');return false;">Last day</a></li>
+            <li><a href="#" onclick="updateTimeline('2');return false;">Last 2 days</a></li>
+            <li><a href="#" onclick="updateTimeline('7');return false;">Last week</a></li>
+            <li><a href="#" onclick="updateTimeline('31');return false;">Last month</a></li>
+            <li><a href="#" onclick="updateTimeline('365');return false;">All</a></li>
+          </ul>
+        </div>
+        <div id="timeline" class="col-md-12"></div>
+      </div>
       <div id="remBeverages" class="col-md-12"></div>
       <div id="remFood" class="col-md-12"></div>
 
@@ -256,6 +270,18 @@
 			console.log(currCat);
 			$("h4[id="+currCat+"]").removeClass("panel-title").addClass("active");
 		});
+
+  $(function(){
+
+    $(".dropdown-menu li a").click(function(){
+        var li = $(this),
+        btn = $('.btn:first-child'); // Maybe need a better selector?
+
+        btn.find('span.Timespan').text(li.text());
+        btn.val(li.text());
+    });
+
+  });
 	</script>
 
 	<script language="javascript">
