@@ -5,6 +5,22 @@
 	$data= new dataManager();
 	//echo "connected";
 	$prodCode=$_POST['prodCode'];
-	$data->removeItem($prodCode);
+  //$prodID=data->getProdIDFromCode($prodCode);
+  //$initialRem=$data->getRemaining($prodID);
+  try{
+	  $data->removeItem($prodCode);
+    echo true;
+  }catch (Exception $e) {
+    //echo 'Caught exception: ',  $e->getMessage(), "\n";
+    echo false;
+  }
+  //$finalRem=$data->getRemaining($prodID);
+  //if($initialRem==$finalRem){
+    //return true;
+  //}
+  //else{
+    //return false;
+  //}
 
+  //shit needs to go in a try catch for this to work
 ?>

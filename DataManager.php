@@ -78,6 +78,14 @@
 		return $result['catID'];
 	}
 
+  public function getProdIDFromCode($prodCode){
+		$prodID= $this->connection->prepare("SELECT * FROM Items WHERE prodCode=:prodCode");
+		$prodID->bindParam(':prodCode',$prodCode);
+		$prodID->execute();
+		$result=$prodID->fetch();
+		return $result['prodID'];
+	}
+
   public function getCatFromProd($prodID){
     $catID= $this->connection->prepare("SELECT * FROM Products WHERE prodID=:prodID");
 		$catID->bindParam(':prodID',$prodID);

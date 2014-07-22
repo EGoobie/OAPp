@@ -178,10 +178,23 @@
 			</div>
 			</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header">Inventory</h1>
+			<h1 class="page-header">Overview</h1>
 			<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#removeItemModal">
 				Remove Item
 			</button>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-file-excel-o"></i> Excel export <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#" >Last day</a></li>
+            <li><a href="#" >Last 2 days</a></li>
+            <li><a href="#" >Last week</a></li>
+            <li><a href="#" >Last month</a></li>
+            <li><a href="#" >All</a></li>
+        </ul>
+      </div>
 
       <div id="timelineChart">
         <div class="btn-group">
@@ -213,10 +226,16 @@
 					<form class="removeItem">
 					<fieldset>
 					<div class="modal-body">
-						<ul class="nav nav-list">
+						<ul class="nav nav-list" id="input">
 							<li class="nav-header">Enter Product Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
 						</ul>
+            <div class="alert alert-success" role="alert" id="itemRemoveSuccess" style="display:none;">
+              Item has been successfully removed!
+            </div>
+            <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
+              Oops, something is wrong, please try again
+            </div>
 					</div>
 					</fieldset>
 					</form>
@@ -243,12 +262,25 @@
 					$.ajax({
 						type: "POST",
 					url: "removeItem.php",
+          dataType: 'HTML',
 					data: $('form.removeItem').serialize(),
 						success: function(data){
 							//alert(data);
 							console.log($('form.removeItem').serialize());
-							//$("#thanks").html(msg)
-							$("#removeItemModal").modal('hide');
+							if(data){
+                console.log(data);
+                $( '#input' ).hide();
+                $('#itemRemoveSuccess').show();
+                $('#itemRemoveFail').hide();
+                //$("#removeItemModal").modal('hide').delay(10000);
+                setTimeout(function() { $("#removeItemModal").modal('hide'); }, 3000);
+                setTimeout(function() { location.reload(); }, 3000);
+              }
+
+              else{
+                $('#itemRemoveFail').show();
+             }
+
 						},
 					error: function(){
 						alert("failure");
@@ -275,7 +307,8 @@
 
     $(".dropdown-menu li a").click(function(){
         var li = $(this),
-        btn = $('.btn:first-child'); // Maybe need a better selector?
+        btn=$(this).parents(".btn-group").find('.Timespan').text($(this).text());
+        //btn = $('.btn:first-child'); // Maybe need a better selector?
 
         btn.find('span.Timespan').text(li.text());
         btn.val(li.text());
