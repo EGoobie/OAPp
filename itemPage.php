@@ -199,11 +199,17 @@
 					<form class="addItems">
 					<fieldset>
 					<div class="modal-body">
-						<ul class="nav nav-list">
+						<ul class="nav nav-list" id="inputAdd">
 							<li class="nav-header">Number of items</li>
 							<li><input class="input-xlarge" value="" type="text" name="numItems"></li>
 						</ul>
 						<input type="hidden" name="prodID" value=<?php echo $mainProdID;?>>
+            <div class="alert alert-success" role="alert" id="itemAddSuccess" style="display:none;">
+              Items have been successfully added!
+            </div>
+            <div class="alert alert-danger" role="alert" id="itemAddFail" style="display:none;">
+              Oops, something is wrong, please try again
+            </div>
 					</div>
 					</fieldset>
 					</form>
@@ -231,8 +237,18 @@
 						success: function(data){
 							//alert(data);
 							console.log($('form.addProduct').serialize());
-							//$("#thanks").html(msg)
-							$("#addItemsModal").modal('hide');
+              if(data){
+                $( '#inputAdd' ).hide();
+                $('#itemAddSuccess').show();
+                $('#itemAddFail').hide();
+
+							  setTimeout(function() { $("#addItemsModal").modal('hide');}, 3000);
+                setTimeout(function() { linkProduct('<?php echo $prod;?>'); }, 3000);
+              }
+
+              else{
+                $('#itemAddFail').show();
+              }
 						},
 					error: function(){
 						alert("failure");
@@ -255,10 +271,16 @@
 					<form class="removeItem">
 					<fieldset>
 					<div class="modal-body">
-						<ul class="nav nav-list">
+						<ul class="nav nav-list" id="inputRem">
 							<li class="nav-header">Enter Product Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
 						</ul>
+            <div class="alert alert-success" role="alert" id="itemRemoveSuccess" style="display:none;">
+              Item has been successfully removed!
+            </div>
+            <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
+              Oops, something is wrong, please try again
+            </div>
 					</div>
 					</fieldset>
 					</form>
@@ -284,13 +306,25 @@
 					$.ajax({
 						type: "POST",
 					url: "removeItem.php",
+          dataType: 'HTML',
 					data: $('form.removeItem').serialize(),
 						success: function(data){
 							//alert(data);
 							console.log($('form.removeItem').serialize());
-							//$("#thanks").html(msg)
-							$("#removeItemModal").modal('hide');
-							linkProduct('<?php echo $prod;?>');
+							if(data){
+                console.log(data);
+                $( '#inputRem' ).hide();
+                $('#itemRemoveSuccess').show();
+                $('#itemRemoveFail').hide();
+                //$("#removeItemModal").modal('hide').delay(10000);
+                setTimeout(function() { $("#removeItemModal").modal('hide'); }, 3000);
+                setTimeout(function() { linkProduct('<?php echo $prod;?>'); }, 3000);
+              }
+
+              else{
+                $('#itemRemoveFail').show();
+             }
+
 						},
 					error: function(){
 						alert("failure");

@@ -4,7 +4,10 @@
 	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
 	$data= new dataManager();
 	//echo "connected";
-	$data->addItems($_POST);
-	echo "items added";
-
+  try{
+	  $data->addItems($_POST);
+	  echo true;
+  }catch(Exception $e){
+    echo false;
+  }
 ?>
