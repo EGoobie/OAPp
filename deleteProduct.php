@@ -5,7 +5,12 @@
  $data= new dataManager();
 	//echo "connected";
 	$product=$_POST['Product'];
-	$data->deleteProduct($product);
-	echo "product removed";
+
+  try{
+	  $data->deleteProduct($product);
+	  echo true;
+  }catch(Exception $e){
+    echo false;
+  }
 
 ?>

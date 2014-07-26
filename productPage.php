@@ -163,9 +163,12 @@
 				<?php
 					$prodQuery=$data->getProducts($mainCategory);
 					foreach($prodQuery as $product){
-					$prodName= $product['name'];?>
-					<a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?></a>
-					<button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button>
+					  $prodName= $product['name'];
+            $prodID= $product['prodID'];
+            $remaining=$data->getRemaining($prodID);?>
+					  <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?><span class="badge"><?php echo $remaining;?></span></a>
+
+					  <button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button>
 				<?php } ?>
 			</div>
 			<!-- Button trigger modal -->
@@ -291,13 +294,22 @@
 			<div class="modal-content">
 	        <div class="modal-header">
 	              <a class="close" data-dismiss="modal">×</a>
-	              <h3>Warning</h3>
+	              <h3><i class="fa fa-exclamation-triangle"></i>Warning</h3>
 	        </div>
 				<div>
 
-				<h4>There are items remaining in stock for this product. Deleting this product will also remove all remaining items. Are you sure you want to delete this product? <h4>
-
-
+          <div class="alert alert-danger" role="alert" id="prodDeleteAlert" style="display:none;">
+              There may be items remaining in stock for this product. Deleting this product will also remove all remaining items WITHOUT recording their removal. Are you sure you want to delete this product?
+          </div>
+          <div class="alert alert-success" role="alert" id="prodDeleteSuccess" style="display:none;">
+              Product has been successfully deleted.
+          </div>
+          <div class="alert alert-danger" role="alert" id="prodDeleteFail" style="display:none;">
+              Oops, something went wrong, please try again.
+          </div>
+          <script type="text/javascript">
+          $('#prodDeleteAlert').show();
+          </script>
 				</div>
 			<div class="modal-footer">
 				<button class="btn btn-danger" id="submit1" onclick="deleteProduct(getStoredProduct());return false;">Delete Product</button>
@@ -342,9 +354,28 @@
 		function deleteProduct($product){
 			console.log("function called");
 			//add in warning message
-			$.post('deleteProduct.php', {'Product': $product});
-			//use ajax to update page
-			linkCategory('<?php echo $mainCategory;?>');
+			//$.post('deleteProduct.php', {'Product': $product}, );
+      $.ajax({
+						type: "POST",
+					  url: "deleteProduct.php",
+            dataType: 'HTML',
+					  data: {'Product': $product},
+						success: function(data){
+							if(data){
+               $('#prodDeleteAlert').hide();
+               $('#prodDeleteSuccess').show();
+               $('#prodDeleteFail').hide();
+               setTimeout(function() { $("#deleteProductModal").modal('hide'); }, 3000);
+                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 3000);
+              }
+
+              else{
+               $('#prodDeleteAlert').hide();
+               $('#prodDeleteSuccess').hide();
+               $('#prodDeleteFail').show();
+             }
+					 },
+			});
 		}
 	</script>
   </body>
