@@ -18,7 +18,8 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
-  $data->prepTimelineChart('30','1');
+  $bool=$data->abvCheck('CA1');
+  echo $bool
   //$data->prepTimelineChart('1','1');
   //foreach($json as $poop){
   //  echo $poop;

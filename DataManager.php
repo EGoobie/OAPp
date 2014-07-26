@@ -50,8 +50,108 @@
 		$prodAbv=strtoupper($prodAbvCaps);
 
 		$query->execute();
-		echo"product added";
 	}
+
+  public function addProductFromRemProd($name){
+    $nameInCaps=strtoupper($name);
+    $products= $this->connection->prepare("SELECT * FROM RemovedProducts");
+		$products->execute();
+    $prodList=$products->fetchAll();
+
+    foreach ($prodList as $product){
+      $prodNameCaps=strtoupper($product['name']);
+      if($nameInCaps==$prodNameCaps){
+        $name1=$product['name'];
+        $catID=$product['catID'];
+        $prodAbv=$product['prodAbv'];
+
+        $query = $this->connection->prepare("INSERT INTO Products (prodID, catID, name, prodAbv) VALUES (DEFAULT,:catID,:name, :prodAbv)");
+
+		    $query->bindParam(':catID', $catID);
+		    $query->bindParam(':name', $name1);
+		    $query->bindParam(':prodAbv', $prodAbv);
+
+		    $query->execute();
+
+        $query = $this->connection->prepare("DELETE FROM RemovedProducts WHERE name = :name");
+
+		    $query->bindParam(':name', $name1);
+
+		    $query->execute();
+      }
+    }
+  }
+
+  public function containsProdCurr($name){
+    $nameInCaps=strtoupper($name);
+    $products= $this->connection->prepare("SELECT * FROM Products");
+		$products->execute();
+    $prodList=$products->fetchAll();
+
+    foreach ($prodList as $product){
+      $prodNameCaps=strtoupper($product['name']);
+      if($nameInCaps==$prodNameCaps){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function containsProdRem($name){
+    $nameInCaps=strtoupper($name);
+    $products= $this->connection->prepare("SELECT * FROM RemovedProducts");
+		$products->execute();
+    $prodList=$products->fetchAll();
+
+    foreach ($prodList as $product){
+      $prodNameCaps=strtoupper($product['name']);
+      if($nameInCaps==$prodNameCaps){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function containsAbv($prodAbv){
+    $abvCaps=strtoupper($prodAbv);
+    $products = $this->connection->prepare("SELECT * FROM Products");
+		$products->execute();
+		$prodList=$products->fetchAll();
+
+    foreach($prodList as $product){
+      $prodAbv=$product['prodAbv'];
+      if($abvCaps==$prodAbv){
+        return true;
+      }
+    }
+
+    $remProducts = $this->connection->prepare("SELECT * FROM RemovedProducts");
+		$remProducts->execute();
+		$remProdList=$products->fetchAll();
+
+    foreach($prodList as $product){
+      $prodAbv=$product['prodAbv'];
+      if($abvCaps==$prodAbv){
+        return true;
+      }
+    }
+
+    return false;
+
+  }
+
+  public function abvCheck($prodAbv){
+    $abvLength=strlen($prodAbv);
+
+    if (!preg_match('/[^A-Za-z]/', $prodAbv)&&$abvLength==3){
+      return true;
+    }
+
+    return false;
+
+  }
 
 	public function getCategories(){
 		$query = $this->connection->prepare("SELECT * FROM Categories");

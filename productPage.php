@@ -185,13 +185,28 @@
 					<form class="addProduct">
 					<fieldset>
 					<div class="modal-body">
-						<ul class="nav nav-list">
+						<ul class="nav nav-list" id='input'>
 							<li class="nav-header">Product Name</li>
 							<li><input class="input-xlarge" value="" type="text" name="name"></li>
 							<li class="nav-header">3 Letter Abbreviation Code</li>
 							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
 						</ul>
 						<input type="hidden" name="catID" value=<?php echo $catID;?>>
+            <div class="alert alert-success" role="alert" id="productAddSuccess" style="display:none;">
+              Product has been successfully added!
+            </div>
+            <div class="alert alert-danger" role="alert" id="usedAbvFail" style="display:none;">
+              The 3 letter code is already taken, please try again
+            </div>
+            <div class="alert alert-warning" role="alert" id="productAlreadyExists" style="display:none;">
+              The product you have added already exists in the database
+            </div>
+            <div class="alert alert-danger" role="alert" id="abvError" style="display:none;">
+              Oops, something is wrong with the 3 letter code, please try again making sure it contains no numbers and exactly 3 letters
+            </div>
+            <div class="alert alert-success" role="alert" id="productInRemProd" style="display:none;">
+              Product has been successfully added back to database from the archive.
+            </div>
 					</div>
 					</fieldset>
 					</form>
@@ -217,11 +232,49 @@
 					url: "AddProduct.php",
 					data: $('form.addProduct').serialize(),
 						success: function(data){
-							//alert(data);
-							//console.log($('form.addProduct').serialize());
-							//$("#thanks").html(msg)
-							$("#addProductModal").modal('hide');
-							linkCategory('<?php echo $mainCategory;?>');
+							if(data=='1'){
+                $( '#input' ).hide();
+                $('#productAlreadyExists').show();
+                $('#usedAbvFail').hide();
+                $('#productAddSuccess').hide();
+                $('#abvError').hide();
+                $('#productInRemProd').hide();
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
+              }
+              if(data=='2'){
+                $( '#input' ).hide();
+                $('#productAlreadyExists').hide();
+                $('#usedAbvFail').hide();
+                $('#productAddSuccess').hide();
+                $('#abvError').hide();
+                $('#productInRemProd').show();
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
+                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 3000);
+              }
+              if(data=='3'){
+                $('#productAlreadyExists').hide();
+                $('#usedAbvFail').show();
+                $('#productAddSuccess').hide();
+                $('#abvError').hide();
+                $('#productInRemProd').hide();
+              }
+              if(data=='4'){
+                $( '#input' ).hide();
+                $('#productAlreadyExists').hide();
+                $('#usedAbvFail').hide();
+                $('#productAddSuccess').show();
+                $('#abvError').hide();
+                $('#productInRemProd').hide();
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
+                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 3000);
+              }
+              if(data=='5'){
+                $('#productAlreadyExists').hide();
+                $('#usedAbvFail').hide();
+                $('#productAddSuccess').hide();
+                $('#abvError').show();
+                $('#productInRemProd').hide();
+              }
 						},
 					error: function(){
 						alert("failure");
