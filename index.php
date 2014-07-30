@@ -158,8 +158,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <span class="glyphicon glyphicon-file">
-                            </span><a href = productPage.html>Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                            <i class="fa fa-bar-chart-o"></i>
+                            <a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
@@ -188,11 +188,11 @@
           <i class="fa fa-file-excel-o"></i> Excel export <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="#" >Last day</a></li>
-            <li><a href="#" >Last 2 days</a></li>
-            <li><a href="#" >Last week</a></li>
-            <li><a href="#" >Last month</a></li>
-            <li><a href="#" >All</a></li>
+            <li><a href="#" onclick="excelExporter('1');return false;" >Last day</a></li>
+            <li><a href="#" onclick="excelExporter('2');return false;" >Last 2 days</a></li>
+            <li><a href="#" onclick="excelExporter('7');return false;">Last week</a></li>
+            <li><a href="#" onclick="excelExporter('31');return false;">Last month</a></li>
+            <li><a href="#" onclick="excelExporter('365');return false;">All</a></li>
         </ul>
       </div>
 
@@ -261,7 +261,7 @@
 					console.log("were in");
 					$.ajax({
 						type: "POST",
-					url: "removeItem.php",
+					url: "/phpClasses/removeItem.php",
           dataType: 'HTML',
 					data: $('form.removeItem').serialize(),
 						success: function(data){
@@ -291,6 +291,28 @@
 					});
 
 		}
+
+    function excelExporter(days){
+      filepath=null;
+      $.ajax({
+        type: 'POST',
+        async: false,
+        url: "/phpClasses/excelExport.php",
+        data: {'days':days},
+        success: function(retData) {
+          console.log(retData);
+          $("body").append("<iframe src='" + retData.url+ "' style='display: none;' ></iframe>");
+          filepath=retData.url;
+        }
+      });
+
+      setTimeout(function() {
+        $.post('/phpClasses/deleteServerFile.php', {'filepath':filepath}, function(retData) {
+          console.log(retData);
+        });
+      }, 3000);
+
+    }
 		</script>
 		</div>
 	</div>

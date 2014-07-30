@@ -222,6 +222,14 @@
     }
   }
 
+  public function getCatName($catID){
+    $prod= $this->connection->prepare("SELECT * FROM Categories WHERE catID=:catID");
+		$prod->bindParam(':catID',$catID);
+		$prod->execute();
+    $result=$prod->fetch();
+    return $result['category'];
+  }
+
 	public function deleteProduct($product) {
 		$prodInfo= $this->connection->prepare("SELECT * FROM Products WHERE name=:name");
 		$prodInfo->bindParam(':name',$product);
@@ -477,6 +485,30 @@
 
     $json=json_encode($mainData, JSON_NUMERIC_CHECK);
     echo $json;
+  }
+
+  public function prepExcelData($days){
+    $currTime= time();
+    $daysInMs=$days*24*60*60;
+    $timeCutoff=$currTime-$daysInMs;
+
+    //get removed items
+    $remItems=$this->connection->prepare("SELECT * FROM  RemovedItems ORDER BY  timestamp ASC");
+    //$remItems=$this->connection->prepare("SELECT * FROM RemovedItems");
+    //$remItems->bindParam(':prodCode', $prodCode);
+    $remItems->execute();
+    $remItems1=$remItems->fetchAll();
+
+    //collect all items removed in the timespan
+    $itemsInTimespan=array();
+    foreach($remItems1 as $item){
+      $timeOfRem=$item['timestamp'];
+      $timestampOfRem=strtotime($timeOfRem);
+      if($timestampOfRem > $timeCutoff){
+        $itemsInTimespan[]=$item;
+      }
+    }
+    return $itemsInTimespan;
   }
 }
 ?>

@@ -1,6 +1,6 @@
 
   $(document).ready(function () {
-     $.getJSON('getChartData.php', {"catID": '1',"chartType": 'remaining'}, function(data) {
+     $.getJSON('/phpClasses/getChartData.php', {"catID": '1',"chartType": 'remaining'}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'remBeverages',
@@ -53,7 +53,7 @@
 
       });
 
-      $.getJSON('getChartData.php', {"catID": '2',"chartType": 'remaining'}, function(data) {
+      $.getJSON('/phpClasses/getChartData.php', {"catID": '2',"chartType": 'remaining'}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'remFood',
@@ -112,7 +112,7 @@
       }
     });
 
-    $.getJSON('getChartData.php', {"catID": '1',"chartType": 'timeline',"days":'35'}, function(data) {
+    $.getJSON('/phpClasses/getChartData.php', {"catID": '1',"chartType": 'timeline',"days":'35'}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'timeline',
@@ -169,7 +169,7 @@
   }
 
   function timeLineChartGen(days){
-    $.getJSON('getChartData.php', {"catID": '1',"chartType": 'timeline',"days": days}, function(data) {
+    $.getJSON('/phpClasses/getChartData.php', {"catID": '1',"chartType": 'timeline',"days": days}, function(data) {
         remainingChart = new Highcharts.Chart( {
             chart: {
               renderTo:'timeline',

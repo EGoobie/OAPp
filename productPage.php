@@ -136,8 +136,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <span class="glyphicon glyphicon-file">
-                            </span><a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                            <i class="fa fa-bar-chart-o"></i>
+                            <a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
@@ -232,7 +232,7 @@
 		function addToDB() {
 					$.ajax({
 						type: "POST",
-					url: "AddProduct.php",
+					url: "/phpClasses/addProduct.php",
 					data: $('form.addProduct').serialize(),
 						success: function(data){
 							if(data=='1'){
@@ -357,7 +357,7 @@
 			//$.post('deleteProduct.php', {'Product': $product}, );
       $.ajax({
 						type: "POST",
-					  url: "deleteProduct.php",
+					  url: "/phpClasses/deleteProduct.php",
             dataType: 'HTML',
 					  data: {'Product': $product},
 						success: function(data){
