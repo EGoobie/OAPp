@@ -510,5 +510,73 @@
     }
     return $itemsInTimespan;
   }
+
+  //login functions
+  public function getLoginParams($username){//throws exception if user not found
+    $userData=$this->connection->prepare("SELECT * FROM  Users WHERE username= :username ");
+    $userData->bindParam(':username', $username);
+    $userData->execute();
+    $userData1=$userData->fetch();
+    return $userData1;
+  }
+
+  public function isUsernameTaken($username){
+    $userData=$this->connection->prepare("SELECT * FROM  Users");
+    $userData->execute();
+    $userData1=$userData->fetchAll();
+
+    foreach($userData1 as $user){
+      $storedName=$user['username'];
+      if($username==$storedName){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function isEmailTaken($email){
+    $userData=$this->connection->prepare("SELECT * FROM  Users");
+    $userData->execute();
+    $userData1=$userData->fetchAll();
+
+    foreach($userData1 as $user){
+      $storedEmail=$user['email'];
+      if($email==$storedEmail){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function hashPassAndStore($data){
+    //generate random salt
+    $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+    $password=$data['password'];
+    //hash pasword with salt
+    $hashedPass = hash('sha256', $password . $salt);
+    for($round = 0; $round < 65536; $round++){
+       $hashedPass = hash('sha256', $hashedPass . $salt);
+    }
+    $username=$data['username'];
+    $email=$data['email'];
+    $approved=0;
+
+    $insertUser=$this->connection->prepare("INSERT INTO Users (id ,username, password, salt, email, approved) VALUES (DEFAULT,:username,:password,:salt, :email,:approved)");
+
+    $insertUser->bindParam(':username', $username);
+    $insertUser->bindParam(':password', $hashedPass);
+    $insertUser->bindParam(':salt', $salt);
+    $insertUser->bindParam(':email', $email);
+    $insertUser->bindParam(':approved', $approved);
+
+    try{
+       $insertUser->execute();
+        return true;
+    }catch(PDOException $ex){
+        return false;
+    }
+  }
 }
 ?>

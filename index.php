@@ -1,5 +1,21 @@
-
+<?php session_start();?>
 <!DOCTYPE html>
+<!--PHP includes-->
+<?php
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL ^ E_NOTICE);
+	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
+	$data= new dataManager();
+	$category="Overview";
+
+  if(empty($_SESSION['user'])){
+     // If they are not, we redirect them to the login page.
+     header("Location: loginPage.php");
+
+    die("Redirecting to loginPage.php");
+  }
+
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -32,14 +48,7 @@
   <script src="js\exporting.js"></script>
   <script src="chartManager.js"></script>
 
-	<!--PHP includes-->
-		<?php
-		ini_set('display_errors', 1);
-	error_reporting(E_ALL ^ E_NOTICE);
-		 require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
-		 $data= new dataManager();
-		 $category="Overview";
-		?>
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -195,7 +204,9 @@
             <li><a href="#" onclick="excelExporter('365');return false;">All</a></li>
         </ul>
       </div>
-
+      <button class="btn btn-danger btn-xs" id="logout">
+				Logout
+			</button>
       <div id="timelineChart">
         <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -348,6 +359,17 @@
 			console.log("function called");
 			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );
 		}
+
+    $(document).ready(function () {
+			$('#logout').click(function(e){
+				console.log("logout");
+				e.preventDefault();
+				e.stopPropagation();
+				$.post( "/phpClasses/logout.php", function( data ) {
+          location.reload();
+        });
+			});
+		});
 
 	</script>
 

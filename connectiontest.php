@@ -18,8 +18,8 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
-  $cat=$data->getCatName('1');
-  echo $cat
+  $cat=$data->getLoginParams('oaptemp');
+  echo $cat['username'];
   //$data->prepTimelineChart('1','1');
   //foreach($json as $poop){
   //  echo $poop;
