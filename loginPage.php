@@ -108,23 +108,30 @@
 					<form class="register">
 					<fieldset>
 					<div class="modal-body">
-						<ul class="nav nav-list" id="input">
-							<li class="nav-header">Username</li>
-							<li><input class="input-xlarge" value="" type="text" name="username"></li>
-              <li class="nav-header">Email</li>
-							<li><input class="input-xlarge" value="" type="text" name="email"></li>
-              <li class="nav-header">Password</li>
-							<li><input type="password" class="input-xlarge" value="" type="text" name="password"></li>
-						</ul>
-            <div class="alert alert-success" role="alert" id="registerSuccess" style="display:none;">
-              Account has been registered. Please wait until an admin confirms account details.
+            <input type="email" name="username" class="form-control" placeholder="Username" required autofocus>
+            <div class="alert alert-danger" role="alert" id="noUsername" style="display:none;">
+              Please enter a username.
             </div>
-            <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
-              Oops, something is wrong, please try again
+            <div class="alert alert-danger" role="alert" id="takenUsername" style="display:none;">
+              This username is already taken, please use another one.
+            </div>
+            <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+            <div class="alert alert-danger" role="alert" id="takenEmail" style="display:none;">
+              This email is already registered to an account.
+            </div>
+            <div class="alert alert-danger" role="alert" id="invalidEmail" style="display:none;">
+              Please enter a valid email address
+            </div>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <div class="alert alert-danger" role="alert" id="noPassword" style="display:none;">
+              Please enter a password
             </div>
 					</div>
 					</fieldset>
 					</form>
+          <div class="alert alert-success" role="alert" id="registerSuccess" style="display:none;">
+              Account has been registered. Please wait until an admin approves your account.
+            </div>
 				</div>
 			<div class="modal-footer">
 				<button class="btn btn-success" id="submit2">Register</button>
@@ -152,12 +159,51 @@
 					data: $('form.register').serialize(),
 						success: function(data){
 							//alert(data);
-							if(data){
-                console.log(data);
+							if(data==1){
+                 $('#noUsername').show();
+                 $('#noPassword').hide();
+                 $('#invalidEmail').hide();
+                 $('#takenUsername').hide();
+                 $('#takenEmail').hide();
               }
-
-              else{
-             }
+              else if(data==2){
+                 $('#noPassword').show();
+                 $('#noUsername').hide();
+                 $('#invalidEmail').hide();
+                 $('#takenUsername').hide();
+                 $('#takenEmail').hide();
+              }
+              else if(data==3){
+                 $('#invalidEmail').show();
+                 $('#noUsername').hide();
+                 $('#noPassword').hide();
+                 $('#takenUsername').hide();
+                 $('#takenEmail').hide();
+              }
+              else if(data==4){
+                 $('#takenUsername').show();
+                 $('#noUsername').hide();
+                 $('#noPassword').hide();
+                 $('#invalidEmail').hide();
+                 $('#takenEmail').hide();
+              }
+              else if(data==5){
+                 $('#takenEmail').show();
+                 $('#noUsername').hide();
+                 $('#noPassword').hide();
+                 $('#invalidEmail').hide();
+                 $('#takenUsername').hide();
+              }
+              else if(data==6){
+                 $('form.register').hide();
+                 $('#registerSuccess').show();
+                 $('#noUsername').hide();
+                 $('#noPassword').hide();
+                 $('#invalidEmail').hide();
+                 $('#takenUsername').hide();
+                 $('#takenEmail').hide();
+                 setTimeout(function() { $("#registerModal").modal('hide'); }, 2000);
+              }
 
 						},
 					error: function(){
