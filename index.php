@@ -238,11 +238,13 @@
 					<fieldset>
 					<div class="modal-body">
 						<ul class="nav nav-list" id="input">
-							<li class="nav-header">Enter Product Code</li>
-							<li><input class="input-xlarge" value="" type="text" name="prodCode"></li>
+							<li class="nav-header">Enter 3 letter product code </li>
+							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
+              <li class="nav-header">Number of items to remove </li>
+							<li><input class="input-xlarge" value="" type="text" name="number"></li>
 						</ul>
             <div class="alert alert-success" role="alert" id="itemRemoveSuccess" style="display:none;">
-              Item has been successfully removed!
+              Items have been successfully removed!
             </div>
             <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
               Oops, something is wrong, please try again
@@ -252,7 +254,7 @@
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit2">Remove Item</button>
+				<button class="btn btn-success" id="submit2">Remove Items</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
@@ -272,7 +274,7 @@
 					console.log("were in");
 					$.ajax({
 						type: "POST",
-					url: "/phpClasses/removeItem.php",
+					url: "/phpClasses/removeItems.php",
           dataType: 'HTML',
 					data: $('form.removeItem').serialize(),
 						success: function(data){

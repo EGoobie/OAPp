@@ -18,14 +18,13 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
-  $cat=$data->getLoginParams('oaptemp');
-  echo $cat['username'];
+  $data->removeItems('sum','2');
+  //$paul=$data->getProdFromAbv('sum');
+//echo $paul;
   //$data->prepTimelineChart('1','1');
   //foreach($json as $poop){
   //  echo $poop;
   //}
-
-
 
 
 

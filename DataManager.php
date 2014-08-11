@@ -343,6 +343,64 @@
 		return $archive->execute();
 	}
 
+
+  public function removeItems($prodAbv,$number){
+    $prodAbvCaps=strtoupper($prodAbv);
+    $prodID=$this->getProdFromAbv($prodAbvCaps);
+    for($i=0;$i<$number;$i++){
+      $minID=$this->getMinID($prodID);
+      echo $minID;
+      $product=$this->connection->prepare("SELECT * FROM Items WHERE itemID= :itemID");
+      $product->bindParam(':itemID', $minID);
+		  $product->execute();
+		  $prodInfo=$product->fetch();
+
+      $delete = $this->connection->prepare("DELETE FROM Items WHERE itemID= :itemID");
+      $delete->bindParam(':itemID', $minID);
+		  $delete->execute();
+
+		  $archive=$this->connection->prepare("INSERT INTO RemovedItems (itemID, prodID, prodCode, timestamp) VALUES (:itemID,:prodID,:prodCode, now())");
+
+	  	$itemID=$prodInfo['itemID'];
+	  	$prodID=$prodInfo['prodID'];
+	  	$prodCode=$prodInfo['prodCode'];
+	  	//$timestamp=now();
+
+	  	$archive->bindParam(':itemID',$itemID);
+	  	$archive->bindParam(':prodID',$prodID);
+	  	$archive->bindParam(':prodCode',$prodCode);
+	  	//$archive->bindParam(':timestamp,$timestamp');
+
+		  $archive->execute();
+    }
+  }
+
+  public function test($prodID, $itemID){
+    $product=$this->connection->prepare("SELECT * FROM Items WHERE itemID = :itemID");
+      $product->bindParam(':itemID', $itemID);
+		  $product->execute();
+		  $prodInfo=$product->fetch();
+      return $prodInfo;
+  }
+
+  public function getMinID($prodID){
+    $minID=$this->connection->prepare("SELECT MIN(itemID) FROM Items WHERE prodID=:prodID");
+      $minID->bindParam(':prodID',$prodID);
+      $minID->execute();
+    $min=$minID->fetchColumn();
+    return $min;
+  }
+
+  public function getProdFromAbv($prodAbv){
+    $prodIDQ= $this->connection->prepare("SELECT * FROM Products WHERE prodAbv=:prodAbv");
+    $prodIDQ->bindParam(':prodAbv',$prodAbv);
+    $prodIDQ->execute();
+    $prodID=$prodIDQ->fetch();
+
+    $prod=$prodID['prodID'];
+    return $prod;
+  }
+
 	public function getRemaining($prodID){
 		$query = $this->connection->prepare("SELECT count(*) FROM Items WHERE prodID=:prodID");
 		$query->bindParam(':prodID', $prodID);
