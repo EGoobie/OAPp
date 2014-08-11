@@ -69,10 +69,19 @@
            </button>
           <a class="navbar-brand" href="index.php"><img  id="oapIcon" height="40px" src="oapIconB.jpg"  alt="The best place on Earth">OAP Inventory Manager</a>
         </div>
-      </div>
 
-    </div>
-
+        <ul class="nav navbar-right top-nav" id="user">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-sign-out"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+     </div>
     <div class="container-fluid" id="sidebar" role="navigation">
 
 		<div class="row">
@@ -204,9 +213,7 @@
             <li><a href="#" onclick="excelExporter('365');return false;">All</a></li>
         </ul>
       </div>
-      <button class="btn btn-danger btn-xs" id="logout">
-				Logout
-			</button>
+
       <div id="timelineChart">
         <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -363,7 +370,7 @@
 		}
 
     $(document).ready(function () {
-			$('#logout').click(function(e){
+			$("#user li:eq(1)").click(function(e){
 				console.log("logout");
 				e.preventDefault();
 				e.stopPropagation();
