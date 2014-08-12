@@ -7,7 +7,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Cases Remaining'
+                text: ''
             },
             subtitle: {
                 text: ''
@@ -60,7 +60,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Food Items Remaining'
+                text: ''
             },
             subtitle: {
                 text: ''
@@ -151,9 +151,8 @@
            credits: {
               enabled: false
             },
-
-	        title: {
-	    	    text: 'Timeline of Beverage Item Removal'
+          title: {
+	    	    text: ''
 	        },
           series: data
 
@@ -209,8 +208,8 @@
               enabled: false
             },
 
-	        title: {
-	    	    text: 'Timeline of Beverage Item Removal'
+	       title: {
+	    	    text: ''
 	        },
           series: data
 

@@ -6,7 +6,7 @@
 	error_reporting(E_ALL ^ E_NOTICE);
 	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
 	$data= new dataManager();
-	$category="Overview";
+	$category="Analytics";
 
   if(empty($_SESSION['user'])){
      // If they are not, we redirect them to the login page.
@@ -25,7 +25,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="oapIconB.jpg">
 
-    <title>OApp main page</title>
+    <title>Analytics</title>
 
     <!-- Bootstrap core CSS -->
 	<script src="js\jquery-2.1.1.min.js"></script>
@@ -88,7 +88,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 
 				<!--<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Overview</a></li>
+					<li><a href="#">Overview</a></li>
 				</ul>
 				<ul class="nav nav-sidebar" id="accordion">
 					<?php
@@ -113,7 +113,7 @@
                     <div class="panel-heading">
                         <h4 id="Overview" class="panel-title">
                             <i class="fa fa-home"></i>
-                            </span><a href ="#">Overview</a> </a>
+                            </span><a href ="index.php">Overview</a> </a>
                         </h4>
                     </div>
 
@@ -175,9 +175,9 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 id="Analytics" class="panel-title">
                             <i class="fa fa-bar-chart-o"></i>
-                            <a href = "analytics.php">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                            <a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
@@ -193,106 +193,79 @@
                     </div>
                 </div>
             </div>
-            <div class="btn-group" id="userMenuMobile">
-              <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
-                <i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#" onclick="logoutClick();"><i class="fa fa-sign-out"></i> Log Out</a></li>
-              </ul>
-            </div>
 			</div>
 			</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header">Overview</h1>
+			<h1 class="page-header">Analytics</h1>
       <div class="row">
-        <div class="col-md-12">
-			    <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#removeItemModal">
-				    Remove Item
-			    </button>
+        <div class="col-md-2">
+          <div class="btn-group">
+            <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-file-excel-o"></i> Excel export <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" onclick="excelExporter('1');return false;" >Last day</a></li>
+                <li><a href="#" onclick="excelExporter('2');return false;" >Last 2 days</a></li>
+                <li><a href="#" onclick="excelExporter('7');return false;">Last week</a></li>
+                <li><a href="#" onclick="excelExporter('31');return false;">Last month</a></li>
+                <li><a href="#" onclick="excelExporter('365');return false;">All</a></li>
+            </ul>
+          </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Timeline of Beverage Item Removal</h4>
+            </div>
+            <div class="col-md-6">
+             <div class="btn-group pull-right">
+              <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                <span class="Timespan">Last day</span> <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <li><a href="#" onclick="updateTimeline('1');return false;">Last day</a></li>
+                <li><a href="#" onclick="updateTimeline('2');return false;">Last 2 days</a></li>
+                <li><a href="#" onclick="updateTimeline('7');return false;">Last week</a></li>
+                <li><a href="#" onclick="updateTimeline('31');return false;">Last month</a></li>
+                <li><a href="#" onclick="updateTimeline('365');return false;">All</a></li>
+              </ul>
+             </div>
+            </div>
+           </div>
+          </div>
+        <div class="panel-body">
+          <div id="timeline" class="col-md-12"></div>
         </div>
+       </div>
+      </div>
+
+      <div class="col-lg-12">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+              <h4>Cases Remaining</h4>
+         </div>
+         <div class="panel-body">
+            <div id="remBeverages" class="col-md-12"></div>
+         </div>
+       </div>
+      </div>
+
+      <div class="col-lg-12">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+              <h4>Food Items Remaining</h4>
+         </div>
+         <div class="panel-body">
+            <div id="remFood" class="col-md-12"></div>
+         </div>
+       </div>
+      </div>
 
 
-			<!-- Modal Remove Item -->
-			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-			<div class="modal-content">
-	        <div class="modal-header">
-	              <a class="close" data-dismiss="modal">×</a>
-	              <h3>Remove Item</h3>
-	        </div>
-				<div>
-					<form class="removeItem">
-					<fieldset>
-					<div class="modal-body">
-						<ul class="nav nav-list" id="input">
-							<li class="nav-header">Enter 3 letter product code </li>
-							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
-              <li class="nav-header">Number of items to remove </li>
-							<li><input class="input-xlarge" value="" type="text" name="number"></li>
-						</ul>
-            <div class="alert alert-success" role="alert" id="itemRemoveSuccess" style="display:none;">
-              Items have been successfully removed!
-            </div>
-            <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
-              Oops, something is wrong, please try again
-            </div>
-					</div>
-					</fieldset>
-					</form>
-				</div>
-			<div class="modal-footer">
-				<button class="btn btn-success" id="submit2">Remove Items</button>
-				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-			</div>
-			</div>
-			</div>
-		</div>
-
-		<script>
-		$(document).ready(function () {
-			$('#submit2').click(function(e){
-				console.log("in onclick");
-				e.preventDefault();
-				e.stopPropagation();
-				removeFromDB();
-			});
-		});
-		function removeFromDB() {
-					console.log("were in");
-					$.ajax({
-						type: "POST",
-					url: "/phpClasses/removeItems.php",
-          dataType: 'HTML',
-					data: $('form.removeItem').serialize(),
-						success: function(data){
-							//alert(data);
-							console.log($('form.removeItem').serialize());
-							if(data){
-                console.log(data);
-                $( '#input' ).hide();
-                $('#itemRemoveSuccess').show();
-                $('#itemRemoveFail').hide();
-                //$("#removeItemModal").modal('hide').delay(10000);
-                setTimeout(function() { $("#removeItemModal").modal('hide'); }, 3000);
-                setTimeout(function() { location.reload(); }, 3000);
-              }
-
-              else{
-                $('#itemRemoveFail').show();
-             }
-
-						},
-					error: function(){
-						alert("failure");
-						console.log($('form.removeItem').serialize());
-						console.log("failed");
-					}
-
-					});
-
-		}
-
+    <script>
     function excelExporter(days){
       filepath=null;
       $.ajax({
@@ -350,12 +323,6 @@
 			$.redirect('itemPage.php', { 'Product': $product}, 'POST' );
 		}
 
-    function logoutClick(){
-      console.log("logout");
-				$.post( "/phpClasses/logout.php", function( data ) {
-          location.reload();
-        });
-    }
     $(document).ready(function () {
 			$("#user li:eq(1)").click(function(e){
 				console.log("logout");
