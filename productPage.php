@@ -1,4 +1,21 @@
+<?php session_start();?>
 <!DOCTYPE html>
+<!--PHP includes-->
+<?php
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL ^ E_NOTICE);
+	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
+	$data= new dataManager();
+	$mainCategory= $_POST['Category'];
+
+  if(empty($_SESSION['user'])){
+     // If they are not, we redirect them to the login page.
+     header("Location: loginPage.php");
+
+    die("Redirecting to loginPage.php");
+  }
+
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -7,9 +24,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="oapIconB.jpg">
-	<?php
-		$mainCategory= $_POST['Category'];
-	?>
 
     <title><?php echo $mainCategory; ?></title>
 
@@ -29,14 +43,6 @@
 	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-	<!--PHP includes-->
-		<?php
-		 require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
-		 $data= new dataManager();
-		 $catID=$data->getCatID($mainCategory);
-		 $storedProduct;
-		?>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -61,8 +67,17 @@
            </button>
           <a class="navbar-brand" href="index.php"><img  id="oapIcon" height="40px" src="oapIconB.jpg"  alt="The best place on Earth">OAP Inventory Manager</a>
         </div>
+        <ul class="nav navbar-right top-nav" id="user">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-sign-out"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
       </div>
-
     </div>
 
 
@@ -137,7 +152,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-bar-chart-o"></i>
-                            <a href = "#">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
+                            <a href = "analytics.php">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
