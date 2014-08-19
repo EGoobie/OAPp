@@ -607,7 +607,7 @@
         }
         if($itemProdCode==$prevProd){
           //echo "hello";
-          if($timestamp<($firstTime+(1))){
+          if($timestamp<($firstTime+(2))){
             $count++;
             end($data);
             $last_id=key($data);
@@ -710,7 +710,7 @@
     }
     else{
       $percentage=($itemsRemoved/$totalItems)*100;
-      return $percentage;
+      return round($percentage);
     }
   }
 
