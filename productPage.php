@@ -168,6 +168,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="btn-group" id="userMenuMobile">
+              <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
+                <i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#" onclick="logoutClick();"><i class="fa fa-sign-out"></i> Log Out</a></li>
+              </ul>
+            </div>
 			</div>
 			</div>
 
@@ -181,14 +190,14 @@
 					  $prodName= $product['name'];
             $prodID= $product['prodID'];
             $remaining=$data->getRemaining($prodID);?>
-					  <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?><span class="badge"><?php echo $remaining;?></span></a>
+					  <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"class="list-group-item"><? echo $prodName;?></a>
 
 					  <button href="#" onclick="storeProduct('<?php echo $prodName;?>');return false;" class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#deleteProductModal">Remove Product</button>
 				<?php } ?>
 			</div>
 			<!-- Button trigger modal -->
 			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addProductModal">
-				+ Add Product
+				<i class="fa fa-plus-circle"></i> Add Product
 			</button>
 
 			<!-- Modal Add Product -->
@@ -197,18 +206,26 @@
 			<div class="modal-content">
 	        <div class="modal-header">
 	              <a class="close" data-dismiss="modal">×</a>
-	              <h3>+ Add Product</h3>
+	              <h3><i class="fa fa-plus-circle"></i> Add Product</h3>
 	        </div>
 				<div>
-					<form class="addProduct">
-					<fieldset>
+
 					<div class="modal-body">
-						<ul class="nav nav-list" id='input'>
-							<li class="nav-header">Product Name</li>
-							<li><input class="input-xlarge" value="" type="text" name="name"></li>
-							<li class="nav-header">3 Letter Abbreviation Code</li>
-							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
-						</ul>
+           <fieldset>
+           <form role="form" class="addProduct">
+            <div class="col-md-12" id="input">
+              <div class="form-group">
+                <label for="">Enter product name</label>
+                <input type="email" class="form-control" id="" placeholder="ex: Sapporo"  name="name">
+              </div>
+            </div>
+            <div class="col-md-12" id="input2">
+              <div class="form-group">
+                <label for="">Enter three letter product abbreviation code</label>
+                <input type="email" class="form-control" id="" placeholder="ex: SAP"  name="prodAbv">
+              </div>
+            </div>
+
 						<input type="hidden" name="catID" value=<?php echo $catID;?>>
             <div class="alert alert-success" role="alert" id="productAddSuccess" style="display:none;">
               Product has been successfully added!
@@ -230,7 +247,7 @@
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit">Add Product</button>
+				<button class="btn btn-success" id="submit"><i class="fa fa-plus-circle"></i> Add Product</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
@@ -252,6 +269,7 @@
 						success: function(data){
 							if(data=='1'){
                 $( '#input' ).hide();
+                $( '#input2' ).hide();
                 $('#productAlreadyExists').show();
                 $('#usedAbvFail').hide();
                 $('#productAddSuccess').hide();
@@ -261,6 +279,7 @@
               }
               if(data=='2'){
                 $( '#input' ).hide();
+                $( '#input2' ).hide();
                 $('#productAlreadyExists').hide();
                 $('#usedAbvFail').hide();
                 $('#productAddSuccess').hide();
@@ -278,6 +297,7 @@
               }
               if(data=='4'){
                 $( '#input' ).hide();
+                $( '#input2' ).hide();
                 $('#productAlreadyExists').hide();
                 $('#usedAbvFail').hide();
                 $('#productAddSuccess').show();
@@ -392,6 +412,23 @@
 					 },
 			});
 		}
+
+    function logoutClick(){
+      console.log("logout");
+				$.post( "/phpClasses/logout.php", function( data ) {
+          location.reload();
+        });
+    }
+    $(document).ready(function () {
+			$("#user li:eq(1)").click(function(e){
+				console.log("logout");
+				e.preventDefault();
+				e.stopPropagation();
+				$.post( "/phpClasses/logout.php", function( data ) {
+          location.reload();
+        });
+			});
+		});
 	</script>
   </body>
 </html>

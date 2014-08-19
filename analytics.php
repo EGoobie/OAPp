@@ -197,9 +197,9 @@
 			</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1 class="page-header">Analytics</h1>
-      <div class="row">
-        <div class="col-md-2">
-          <div class="btn-group">
+      <div class="col-lg-12">
+
+          <div class="btn-group ">
             <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-file-excel-o"></i> Excel export <span class="caret"></span>
             </button>
@@ -211,7 +211,7 @@
                 <li><a href="#" onclick="excelExporter('365');return false;">All</a></li>
             </ul>
           </div>
-         </div>
+
       </div>
       <div class="col-lg-12">
        <div class="panel panel-default">

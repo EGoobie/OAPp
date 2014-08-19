@@ -8,6 +8,7 @@
   $number=$_POST['number'];
   //$prodID=data->getProdIDFromCode($prodCode);
   //$initialRem=$data->getRemaining($prodID);
+
   try{
 	  $data->removeItems($prodAbv, $number);
     echo true;

@@ -208,10 +208,36 @@
       <div class="row">
         <div class="col-md-12">
 			    <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#removeItemModal">
-				    Remove Item
+				    <i class="fa fa-minus-circle"></i> Remove Item
 			    </button>
         </div>
 
+        <div class="col-md-12">
+         <div class="panel panel-default">
+           <div class="panel-heading">
+              <h4>Recently Removed Items</h4>
+           </div>
+           <div class="panel-body">
+            <table class="table">
+               <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Time of removal</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <?php $recentRem=$data->recentlyRemoved();
+                      for($i=0;$i<15;$i++){
+                        echo ("<tr><th>".$recentRem[$i]['name']."</th><th>".$recentRem[$i]['quantity']."</th><th>".$recentRem[$i]['timestamp']."</th></tr>");
+                      }
+                  ?>
+               </tbody>
+            </table>
+           </div>
+         </div>
+        </div>
+      </div>
 
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -219,30 +245,86 @@
 			<div class="modal-content">
 	        <div class="modal-header">
 	              <a class="close" data-dismiss="modal">×</a>
-	              <h3>Remove Item</h3>
+	              <h3><i class="fa fa-minus-circle"></i> Remove Item</h3>
 	        </div>
 				<div>
-					<form class="removeItem">
-					<fieldset>
+
 					<div class="modal-body">
-						<ul class="nav nav-list" id="input">
-							<li class="nav-header">Enter 3 letter product code </li>
-							<li><input class="input-xlarge" value="" type="text" name="prodAbv"></li>
-              <li class="nav-header">Number of items to remove </li>
-							<li><input class="input-xlarge" value="" type="text" name="number"></li>
-						</ul>
+            <fieldset>
+					<form role="form" class="form removeItem">
+            <div class="col-md-12" id="input">
+              <div class="form-group">
+                <label for="">Enter three letter product code</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="" name="prodAbv">
+              </div>
+            </div>
+
+            <div class="col-md-12" id="input2">
+              <label for="">Number of items to remove</label>
+              <div class="input-group spinner" id="inputAdd">
+                <input type="text" class="form-control" value="1" name="number">
+                <div class="input-group-btn-vertical">
+                  <button class="btn btn-primary"><i class="fa fa-caret-up"></i></button>
+                  <button class="btn btn-primary"><i class="fa fa-caret-down"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" id="info">
+              <button class="btn btn-primary btn-xs" id="forgotCodes">Forgot product codes?</button>
+              <div class="alert alert-info alert-dismissible" role="alert" id="codeIndex" style="display:none;">
+               <button type="button" class="close" id="infoclose" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <table class="table">
+                 <thead>
+                  <tr>
+                    <th>Beverage Products</th>
+                    <th>Code</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                <?php
+                    $beverageProducts=$data->getProducts('Beverages');
+                    foreach($beverageProducts as $beverage){
+                      $name=$beverage['name'];
+                      $abv=$beverage['prodAbv'];
+                      echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
+                    }
+                ?>
+                </tbody>
+                 <tr><th></th><th></th></tr>
+                <thead>
+                  <tr>
+                    <th>Food Products    </th>
+                    <th>Code</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                <?php
+                    $beverageProducts=$data->getProducts('Food');
+                    foreach($beverageProducts as $beverage){
+                      $name=$beverage['name'];
+                      $abv=$beverage['prodAbv'];
+                      echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
+                    }
+                ?>
+                </tbody>
+               </table>
+              </div>
+            </div>
+
             <div class="alert alert-success" role="alert" id="itemRemoveSuccess" style="display:none;">
               Items have been successfully removed!
             </div>
+            <div class="col-md-12">
             <div class="alert alert-danger" role="alert" id="itemRemoveFail" style="display:none;">
-              Oops, something is wrong, please try again
+              Oops, something is wrong, please make sure you have entered a valid code
+            </div>
             </div>
 					</div>
 					</fieldset>
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit2">Remove Items</button>
+				<button class="btn btn-primary" id="submit2"><i class="fa fa-minus-circle"></i> Remove Items</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
@@ -271,6 +353,8 @@
 							if(data){
                 console.log(data);
                 $( '#input' ).hide();
+                $( '#input2' ).hide();
+                $( '#info' ).hide();
                 $('#itemRemoveSuccess').show();
                 $('#itemRemoveFail').hide();
                 //$("#removeItemModal").modal('hide').delay(10000);
@@ -314,6 +398,37 @@
       }, 3000);
 
     }
+    (function ($) {
+      $('.spinner .btn:first-of-type').on('click', function(e) {
+        e.preventDefault();
+				e.stopPropagation();
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+      });
+      $('.spinner .btn:last-of-type').on('click', function(e) {
+        e.preventDefault();
+				e.stopPropagation();
+        if(parseInt($('.spinner input').val(), 10)!=1){
+          $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+        }
+      });
+    })(jQuery);
+
+    $(document).ready(function () {
+			$('#forgotCodes').click(function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				$( '#forgotCodes' ).hide();
+        $( '#codeIndex' ).show();
+			});
+		});
+    $(document).ready(function () {
+			$('#infoclose').click(function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				$( '#forgotCodes' ).show();
+        $( '#codeIndex' ).hide();
+			});
+		});
 		</script>
 		</div>
 	</div>
