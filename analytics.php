@@ -28,24 +28,24 @@
     <title>Analytics</title>
 
     <!-- Bootstrap core CSS -->
-	<script src="js\jquery-2.1.1.min.js"></script>
-	<script src="js\bootstrap.min.js"></script>
-    <link href="css\bootstrap.min.css" rel="stylesheet">
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css\oappMain.css" rel="stylesheet">
-	<link href="css\component.css" rel="stylesheet">
-	<link href="css\font-awesome.min.css" rel="stylesheet">
+    <link href="css/oappMain.css" rel="stylesheet">
+	<link href="css/component.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
 
 	<!--Accordion Script -->
-	<script src="js\accordion.js"></script>
-	<script src="js\collapse.js"></script>
-	<script src="js\jquery.redirect.min.js" type="text/javascript"></script>
+	<script src="js/accordion.js"></script>
+	<script src="js/collapse.js"></script>
+	<script src="js/jquery.redirect.min.js" type="text/javascript"></script>
 
   <!--Chart js files-->
-  <script src="js\highcharts.js"></script>
-  <script src="js\highcharts-more.js"></script>
-  <script src="js\exporting.js"></script>
+  <script src="js/highcharts.js"></script>
+  <script src="js/highcharts-more.js"></script>
+  <script src="js/exporting.js"></script>
   <script src="chartManager.js"></script>
 
 

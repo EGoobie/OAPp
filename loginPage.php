@@ -12,9 +12,9 @@
     <title>OAP Inventory Manager Login</title>
 
     <!-- Bootstrap core CSS -->
-	  <script src="js\jquery-2.1.1.min.js"></script>
-	  <script src="js\bootstrap.min.js"></script>
-    <link href="css\bootstrap.min.css" rel="stylesheet">
+	  <script src="js/jquery-2.1.1.min.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/signin.css" rel="stylesheet">
