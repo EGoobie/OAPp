@@ -170,6 +170,13 @@
 		return $query;
 	}
 
+  public function getAllProducts(){
+    $query = $this->connection->prepare("SELECT * FROM Products");
+		$query->execute();
+    $getQuery=$query->fetch();
+		return $getQuery;
+  }
+
 	public function getCatID($category){
 		$catID= $this->connection->prepare("SELECT * FROM Categories WHERE category=:category");
 		$catID->bindParam(':category',$category);
@@ -567,6 +574,144 @@
       }
     }
     return $itemsInTimespan;
+  }
+
+  public function recentlyRemoved(){
+    //get removed items
+    $remItems=$this->connection->prepare("SELECT * FROM  RemovedItems ORDER BY  timestamp ASC");
+    //$remItems=$this->connection->prepare("SELECT * FROM RemovedItems");
+    //$remItems->bindParam(':prodCode', $prodCode);
+    $remItems->execute();
+    $remItems1=$remItems->fetchAll();
+
+    $prevProd=0;
+    $firstTime=0;
+    $firstStamp=0;
+    $count=1;
+    $data=array();
+    foreach($remItems1 as $item){
+        //all this neeeds to be in an if statement
+        $itemProdCode=$item['prodID'];
+     // echo "{".$itemProdCode.",".$prevProd."}";
+        $time=$item['timestamp'];
+        $timestamp=strtotime($time);
+        $name=$this->getName($itemProdCode);
+        //echo $itemProdCode. " ";
+
+        if($prevProd==0){
+          //echo"hello1";
+          $prevProd=$itemProdCode;
+          $firstTime=$timestamp;
+          $firstStamp=$time;
+          $data[]=array('name'=>$name,'quantity'=>1 ,'timestamp'=>$time);
+        }
+        if($itemProdCode==$prevProd){
+          //echo "hello";
+          if($timestamp<($firstTime+(1))){
+            $count++;
+            end($data);
+            $last_id=key($data);
+
+            $data[$last_id]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$firstStamp);
+          }
+           else{
+            $count=1;
+            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time);
+            $firstTime=$timestamp;
+            $firstStamp=$time;
+            $prevProd=$itemProdCode;
+          }
+        }
+          else{
+            $count=1;
+            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time);
+            $firstTime=$timestamp;
+            $firstStamp=$time;
+            $prevProd=$itemProdCode;
+          }
+
+      }
+      $dataReverse=array_reverse ( $data , false );
+      return $dataReverse;
+
+  }
+
+
+
+  public function itemsRemLastDay($prodID){
+    $currTime= time();
+    $day=24*60*60;
+    $timeCutoff=$currTime-$day;
+
+    //get removed items
+    $remItems=$this->connection->prepare("SELECT * FROM  RemovedItems ORDER BY  timestamp DESC");
+    //$remItems=$this->connection->prepare("SELECT * FROM RemovedItems");
+    //$remItems->bindParam(':prodCode', $prodCode);
+    $remItems->execute();
+    $remItems1=$remItems->fetchAll();
+
+    //collect all items removed in the timespan
+    $itemsInTimespan=array();
+    foreach($remItems1 as $item){
+      $timeOfRem=$item['timestamp'];
+      $timestampOfRem=strtotime($timeOfRem);
+      if($timestampOfRem > $timeCutoff){
+        $itemsInTimespan[]=$item;
+      }
+    }
+
+    $itemsRemoved=0;
+    foreach($itemsInTimespan as $items){
+      $selProdID=$items['prodID'];
+      if($selProdID==$prodID){
+        $itemsRemoved++;
+      }
+    }
+
+    return $itemsRemoved;
+  }
+
+  public function itemsPercentage($prodID){
+    $currTime= time();
+    $day=24*60*60;
+    $timeCutoff=$currTime-$day;
+
+    //get removed items
+    $remItems=$this->connection->prepare("SELECT * FROM  RemovedItems ORDER BY  timestamp ASC");
+    //$remItems=$this->connection->prepare("SELECT * FROM RemovedItems");
+    //$remItems->bindParam(':prodCode', $prodCode);
+    $remItems->execute();
+    $remItems1=$remItems->fetchAll();
+
+    //collect all items removed in the timespan
+    $itemsInTimespan=array();
+    foreach($remItems1 as $item){
+      $timeOfRem=$item['timestamp'];
+      $timestampOfRem=strtotime($timeOfRem);
+      if($timestampOfRem > $timeCutoff){
+        $itemsInTimespan[]=$item;
+      }
+    }
+
+    $itemsRemoved=0;
+    foreach($itemsInTimespan as $items){
+      $selProdID=$items['prodID'];
+      if($selProdID==$prodID){
+        $itemsRemoved++;
+      }
+    }
+
+    $totalItems=0;
+    foreach($itemsInTimespan as $items){
+      $totalItems++;
+    }
+    if($totalItems==0){
+      return 0;
+    }
+    else{
+      $percentage=($itemsRemoved/$totalItems)*100;
+      return $percentage;
+    }
   }
 
   //login functions

@@ -18,7 +18,11 @@
 	//$data->prepRemainingChart('1');
 	//echo strtoupper("hello325");
 
-  $data->removeItems('sum','2');
+  $poo=$data->recentlyRemoved();
+  //foreach($poo as $pee){
+    //echo "{".$pee['name'].",".$pee['timestamp'].",".$pee['quantity']."}";
+  //}
+  echo $poo[1]['name'];
   //$paul=$data->getProdFromAbv('sum');
 //echo $paul;
   //$data->prepTimelineChart('1','1');
