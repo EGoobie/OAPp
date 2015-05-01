@@ -7,6 +7,7 @@
 	require($_SERVER['DOCUMENT_ROOT']."/dataManager.php");
 	$data= new dataManager();
 	$mainCategory= $_POST['Category'];
+  $catID=$data->getCatID($mainCategory);
 
   if(empty($_SESSION['user'])){
      // If they are not, we redirect them to the login page.
@@ -224,6 +225,7 @@
                 <label for="">Enter three letter product abbreviation code</label>
                 <input type="email" class="form-control" id="" placeholder="ex: SAP"  name="prodAbv">
               </div>
+
             </div>
 
 						<input type="hidden" name="catID" value=<?php echo $catID;?>>
@@ -267,6 +269,7 @@
 					url: "/phpClasses/addProduct.php",
 					data: $('form.addProduct').serialize(),
 						success: function(data){
+              console.log($('form.addProduct').serialize());
 							if(data=='1'){
                 $( '#input' ).hide();
                 $( '#input2' ).hide();
@@ -275,7 +278,7 @@
                 $('#productAddSuccess').hide();
                 $('#abvError').hide();
                 $('#productInRemProd').hide();
-                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 500);
               }
               if(data=='2'){
                 $( '#input' ).hide();
@@ -285,8 +288,8 @@
                 $('#productAddSuccess').hide();
                 $('#abvError').hide();
                 $('#productInRemProd').show();
-                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
-                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 3000);
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 500);
+                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 500);
               }
               if(data=='3'){
                 $('#productAlreadyExists').hide();
@@ -303,8 +306,8 @@
                 $('#productAddSuccess').show();
                 $('#abvError').hide();
                 $('#productInRemProd').hide();
-                setTimeout(function() { $("#addProductModal").modal('hide'); }, 3000);
-                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 3000);
+                setTimeout(function() { $("#addProductModal").modal('hide'); }, 500);
+                setTimeout(function() { linkCategory('<?php echo $mainCategory;?>'); }, 500);
               }
               if(data=='5'){
                 $('#productAlreadyExists').hide();

@@ -286,6 +286,7 @@
                     foreach($beverageProducts as $beverage){
                       $name=$beverage['name'];
                       $abv=$beverage['prodAbv'];
+                      //echo("<tr><th><button class=\"btn btn-primary\" id=\"submit1\" onclick=\"deleteProduct(".$abv.");return false;\">".$name."</button></th></tr>");
                       echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
                     }
                 ?>
@@ -358,8 +359,8 @@
                 $('#itemRemoveSuccess').show();
                 $('#itemRemoveFail').hide();
                 //$("#removeItemModal").modal('hide').delay(10000);
-                setTimeout(function() { $("#removeItemModal").modal('hide'); }, 3000);
-                setTimeout(function() { location.reload(); }, 3000);
+                setTimeout(function() { $("#removeItemModal").modal('hide'); }, 500);
+                setTimeout(function() { location.reload(); }, 500);
               }
 
               else{
@@ -471,6 +472,7 @@
           location.reload();
         });
     }
+
     $(document).ready(function () {
 			$("#user li:eq(1)").click(function(e){
 				console.log("logout");

@@ -321,8 +321,8 @@
                 $('#itemAddSuccess').show();
                 $('#itemAddFail').hide();
 
-							  setTimeout(function() { $("#addItemsModal").modal('hide');}, 3000);
-                setTimeout(function() { linkProduct('<?php echo $prod;?>'); }, 3000);
+							  setTimeout(function() { $("#addItemsModal").modal('hide');}, 500);
+                setTimeout(function() { linkProduct('<?php echo $prod;?>'); }, 500);
               }
 
               else{
