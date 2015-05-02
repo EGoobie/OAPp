@@ -42,11 +42,7 @@
 	<script src="js/collapse.js"></script>
 	<script src="js/jquery.redirect.min.js" type="text/javascript"></script>
 
-  <!--Chart js files-->
-  <script src="js/highcharts.js"></script>
-  <script src="js/highcharts-more.js"></script>
-  <script src="js/exporting.js"></script>
-  <script src="chartManager.js"></script>
+
 
 
 
@@ -239,6 +235,9 @@
         </div>
       </div>
 
+
+
+
 			<!-- Modal Remove Item -->
 			<div id="removeItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -251,64 +250,42 @@
 
 					<div class="modal-body">
             <fieldset>
-					<form role="form" class="form removeItem">
-            <div class="col-md-12" id="input">
-              <div class="form-group">
-                <label for="">Enter three letter product code</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="" name="prodAbv">
-              </div>
-            </div>
-
-            <div class="col-md-12" id="input2">
-              <label for="">Number of items to remove</label>
-              <div class="input-group spinner" id="inputAdd">
-                <input type="text" class="form-control" value="1" name="number">
-                <div class="input-group-btn-vertical">
-                  <button class="btn btn-primary"><i class="fa fa-caret-up"></i></button>
-                  <button class="btn btn-primary"><i class="fa fa-caret-down"></i></button>
-                </div>
-              </div>
-            </div>
+					  <form role="form" class="form removeItem" id="removeItem">
+            </form>
             <div class="col-md-12" id="info">
-              <button class="btn btn-primary btn-xs" id="forgotCodes">Forgot product codes?</button>
-              <div class="alert alert-info alert-dismissible" role="alert" id="codeIndex" style="display:none;">
-               <button type="button" class="close" id="infoclose" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <table class="table">
-                 <thead>
-                  <tr>
-                    <th>Beverage Products</th>
-                    <th>Code</th>
-                  </tr>
-                 </thead>
-                 <tbody>
+              <div class="alert alert-info" role="alert" id="prodIndex">
+
                 <?php
                     $beverageProducts=$data->getProducts('Beverages');
                     foreach($beverageProducts as $beverage){
                       $name=$beverage['name'];
                       $abv=$beverage['prodAbv'];
-                      //echo("<tr><th><button class=\"btn btn-primary\" id=\"submit1\" onclick=\"deleteProduct(".$abv.");return false;\">".$name."</button></th></tr>");
-                      echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
+                      echo("<button class=\"btn btn-primary btn-lg btn-block\" id=\"submit1\" onclick=\"selectProduct('".$abv."');return false;\">".$name."</button>");
+                      //echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
                     }
                 ?>
-                </tbody>
-                 <tr><th></th><th></th></tr>
-                <thead>
-                  <tr>
-                    <th>Food Products    </th>
-                    <th>Code</th>
-                  </tr>
-                 </thead>
-                 <tbody>
+
                 <?php
                     $beverageProducts=$data->getProducts('Food');
                     foreach($beverageProducts as $beverage){
                       $name=$beverage['name'];
                       $abv=$beverage['prodAbv'];
-                      echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
+                      //echo ("<tr><th>".$name."</th><th>".$abv."</th></tr>");
                     }
                 ?>
-                </tbody>
-               </table>
+
+              </div>
+
+              <div class="alert alert-info" role="alert" id="numItems" style="display:none;">
+
+
+
+                  <button class="btn btn-danger btn-lg btn-block" id="submit1" onclick="setAmount('4');return false;">Remove 4</button>
+                  <button class="btn btn-danger btn-lg btn-block" id="submit1" onclick="setAmount('3');return false;">Remove 3</button>
+                  <button class="btn btn-danger btn-lg btn-block" id="submit1" onclick="setAmount('2');return false;">Remove 2</button>
+                 <button class="btn btn-danger btn-lg btn-block" id="submit1" onclick="setAmount('1');return false;">Remove 1</button>
+
+
               </div>
             </div>
 
@@ -322,15 +299,17 @@
             </div>
 					</div>
 					</fieldset>
-					</form>
 				</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" id="submit2"><i class="fa fa-minus-circle"></i> Remove Items</button>
-				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-			</div>
+
 			</div>
 			</div>
 		</div>
+
+
+
+
+
+
 
 		<script>
 		$(document).ready(function () {
@@ -342,7 +321,10 @@
 			});
 		});
 		function removeFromDB() {
-					console.log("were in");
+					//console.log("were in");
+          $( '#input' ).hide();
+          $( '#input2' ).hide();
+
 					$.ajax({
 						type: "POST",
 					url: "/phpClasses/removeItems.php",
@@ -457,6 +439,51 @@
 	</script>
 
 	<script language="javascript">
+    var prod;
+    function selectProduct(prodAbv){
+      prod=prodAbv;
+      $( '#prodIndex' ).hide();
+      $( '#numItems' ).show();
+      //console.log(prod);
+    }
+
+    function setAmount(amt){
+      number=amt;
+      $( '#numItems' ).hide();
+      //console.log(number);
+      removeAndSubmit();
+    }
+
+    function removeAndSubmit(){
+
+      var i = document.createElement("input"); //input element, text
+      i.setAttribute("type", "hidden");
+      i.setAttribute("id", "input");
+      i.setAttribute('type',"text");
+      i.setAttribute('name',"prodAbv");
+      i.setAttribute('value',window.prod);
+      console.log(window.prod);
+
+      var s = document.createElement("input"); //input element, Submit button
+      s.setAttribute("type", "hidden");
+      s.setAttribute("id", "input2");
+      s.setAttribute('type',"text");
+      s.setAttribute('name',"number");
+      s.setAttribute('value',window.number);
+      console.log(window.number);
+
+      document.getElementById("removeItem").appendChild(i);
+      document.getElementById("removeItem").appendChild(s);
+
+      //and some more input elements here
+      //and dont forget to add a submit button
+
+      //document.getElementsByTagName('body')[0].appendChild(f);
+      //$('body').append(f);
+      removeFromDB();
+
+    }
+
 		function linkCategory($category){
 			console.log("function called");
 			$.redirect('productPage.php', { 'Category': $category}, 'POST' );
