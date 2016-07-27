@@ -11,7 +11,7 @@
 		PDO::ATTR_PERSISTENT => true,
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 		try {
-		$this->connection = new PDO('mysql:host=127.0.0.1;dbname=OApp', "OApp", "3ngin33ring", $options);
+		$this->connection = new PDO('mysql:host=127.0.0.1;dbname=oapdata', "OApp", "3ngin33ring", $options);
 		$instance=$connection;
 			//echo "connected";
 		}
@@ -350,6 +350,15 @@
 		return $archive->execute();
 	}
 
+  public function removeItemsNoArchive($prodID,$number){
+    for($i=0;$i<$number;$i++){
+      $minID=$this->getMinID($prodID);
+      
+      $delete = $this->connection->prepare("DELETE FROM Items WHERE itemID= :itemID");
+      $delete->bindParam(':itemID', $minID);
+      $delete->execute();
+    }
+  }
 
   public function removeItems($prodAbv,$number){
     $prodAbvCaps=strtoupper($prodAbv);
@@ -603,7 +612,7 @@
           $prevProd=$itemProdCode;
           $firstTime=$timestamp;
           $firstStamp=$time;
-          $data[]=array('name'=>$name,'quantity'=>1 ,'timestamp'=>$time);
+          $data[]=array('name'=>$name,'quantity'=>1 ,'timestamp'=>$time,'prodCode'=>$itemProdCode);
         }
         if($itemProdCode==$prevProd){
           //echo "hello";
@@ -612,11 +621,11 @@
             end($data);
             $last_id=key($data);
 
-            $data[$last_id]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$firstStamp);
+            $data[$last_id]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$firstStamp,'prodCode'=>$itemProdCode);
           }
            else{
             $count=1;
-            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time);
+            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time,'prodCode'=>$itemProdCode);
             $firstTime=$timestamp;
             $firstStamp=$time;
             $prevProd=$itemProdCode;
@@ -624,7 +633,7 @@
         }
           else{
             $count=1;
-            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time);
+            $data[]=array('name'=>$name,'quantity'=>$count ,'timestamp'=>$time,'prodCode'=>$itemProdCode);
             $firstTime=$timestamp;
             $firstStamp=$time;
             $prevProd=$itemProdCode;
@@ -765,14 +774,18 @@
     $username=$data['username'];
     $email=$data['email'];
     $approved=0;
+    $admin=0;
+    $dataPreference=0;
 
-    $insertUser=$this->connection->prepare("INSERT INTO Users (id ,username, password, salt, email, approved) VALUES (DEFAULT,:username,:password,:salt, :email,:approved)");
+    $insertUser=$this->connection->prepare("INSERT INTO Users (id ,username, password, salt, email, approved, admin, dataPreference) VALUES (DEFAULT,:username,:password,:salt, :email,:approved, :admin, :dataPreference)");
 
     $insertUser->bindParam(':username', $username);
     $insertUser->bindParam(':password', $hashedPass);
     $insertUser->bindParam(':salt', $salt);
     $insertUser->bindParam(':email', $email);
     $insertUser->bindParam(':approved', $approved);
+    $insertUser->bindParam(':admin', $admin);
+    $insertUser->bindParam(':dataPreference', $dataPreference);
 
     try{
        $insertUser->execute();
@@ -780,6 +793,19 @@
     }catch(PDOException $ex){
         return false;
     }
+  }
+
+  public function getUsers(){
+    $query = $this->connection->prepare("SELECT * FROM Users");
+		$query->execute();
+		return $query;
+  }
+
+  public function approveUser($user){
+    $query = $this->connection->prepare("UPDATE Users SET approved= :approved WHERE username= :username");
+    $query->bindParam(':username', $user);
+    $query->bindParam(':approved', 1);
+    $query->execute();
   }
 }
 ?>
