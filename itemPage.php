@@ -48,130 +48,7 @@
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-		   <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar">
-			   <span class="sr-only">Toggle navigation</span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.php"><img  id="oapIcon" height="40px" src="oapIconB.jpg"  alt="The best place on Earth">OAP Inventory Manager</a>
-       </div>
-        <ul class="nav navbar-right top-nav" id="user">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#" onclick="logoutClick();"><i class="fa fa-sign-out"></i> Log Out</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-      </div>
-
-    </div>
-
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <div class="panel-group" id="accordion">
-				<div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4  id="Overview" class="panel-title">
-                            <i class="fa fa-home"></i>
-                            <a href ="index.php">Overview</a> </a>
-                        </h4>
-                    </div>
-
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 id="Beverages" class="panel-title">
-                            <i class="fa fa-beer"></i>
-                            <a id= "Beverages" href = "#" onclick="linkCategory('Beverages');return false;">Beverages</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="fa fa-chevron-down pull-right"></i> </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <?php
-								$prodQuery=$data->getProducts('Beverages');
-								foreach($prodQuery as $product){
-									$prodName= $product['name'];
-									$prodID= $product['prodID'];
-									$remaining=$data->getRemaining($prodID);?>
-								<tr>
-                                    <td>
-                                        <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge"><?php echo $remaining;?></span>
-                                    </td>
-                                </tr>
-								<?php } ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 id="Food" class="panel-title">
-                            <i class="fa fa-cutlery"></i>
-                            <a id="Food" href = "#" onclick="linkCategory('Food');return false;">Food</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="fa fa-chevron-down pull-right"></i> </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <?php
-								$prodQuery=$data->getProducts('Food');
-								foreach($prodQuery as $product){
-									$prodName= $product['name'];
-									$prodID= $product['prodID'];
-									$remaining=$data->getRemaining($prodID);?>
-								<tr>
-                                    <td>
-                                        <a href="#" onclick="linkProduct('<? echo $prodName;?>');return false;"><?php echo $prodName;?></a>
-										<span class="badge"><?php echo $remaining;?></span>
-                                    </td>
-                                </tr>
-								<?php } ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <a href = "analytics.php">Analytics</a><i data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="fa fa-chevron-down pull-right"></i> </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="#">Sales</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-group" id="userMenuMobile">
-              <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
-                <i class="fa fa-user"></i> <?php echo $_SESSION['user']['username']?> <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#" onclick="logoutClick();"><i class="fa fa-sign-out"></i> Log Out</a></li>
-              </ul>
-            </div>
-			</div>
-			</div>
+       <?php include($_SERVER['DOCUMENT_ROOT']."/navbar.php"); ?>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><?php echo $prod;?></h1>
@@ -180,7 +57,7 @@
             <!-- Button trigger modal -->
         <div class="col-md-12">
 			    <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addItemsModal" id="itemPage">
-				     <i class="fa fa-plus-circle"></i> Add Items
+				     <i class="fa fa-plus-circle"></i> Adjust Number of Items
 			    </button>
 			  </div>
 
@@ -266,7 +143,7 @@
 			<div class="modal-content">
 	        <div class="modal-header">
 	              <a class="close" data-dismiss="modal">×</a>
-	              <h3><i class="fa fa-plus-circle"></i> Add Items</h3>
+	              <h3><i class="fa fa-plus-circle"></i> Adjust Number of Items</h3>
 	        </div>
 				<div>
 					<form class="addItems">
@@ -275,7 +152,7 @@
             <h4> Number of items </h4>
             <div class="col-md-12">
             <div class="input-group spinner" id="inputAdd">
-              <input type="text" class="form-control" value="0" name="numItems">
+              <input type="text" class="form-control" value=<?php echo $data->getRemaining($mainProdID); ?> name="numItems">
               <div class="input-group-btn-vertical">
                 <button class="btn btn-primary"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-primary"><i class="fa fa-caret-down"></i></button>
@@ -284,7 +161,7 @@
             </div>
 						<input type="hidden" name="prodID" value=<?php echo $mainProdID;?>>
             <div class="alert alert-success" role="alert" id="itemAddSuccess" style="display:none;">
-              Items have been successfully added!
+              Item count has been successfully adjusted!
             </div>
             <div class="alert alert-danger" role="alert" id="itemAddFail" style="display:none;">
               Oops, something is wrong, please try again
@@ -294,7 +171,7 @@
 					</form>
 				</div>
 			<div class="modal-footer">
-				<button class="btn btn-success" id="submit"><i class="fa fa-plus-circle"></i> Add Items</button>
+				<button class="btn btn-success" id="submit"><i class="fa fa-plus-circle"></i> Adjust Number of Items</button>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
 			</div>
 			</div>
@@ -311,11 +188,11 @@
 		function addToDB() {
 					$.ajax({
 						type: "POST",
-					url: "/phpClasses/addItems.php",
+					url: "/phpClasses/adjustNumbers.php",
 					data: $('form.addItems').serialize(),
 						success: function(data){
 							//alert(data);
-							console.log($('form.addProduct').serialize());
+							console.log($('form.addItems').serialize());
               if(data){
                 $( '#inputAdd' ).hide();
                 $('#itemAddSuccess').show();
@@ -391,7 +268,7 @@
         });
     }
     $(document).ready(function () {
-			$("#user li:eq(1)").click(function(e){
+			$("#user li:eq(2)").click(function(e){
 				console.log("logout");
 				e.preventDefault();
 				e.stopPropagation();
