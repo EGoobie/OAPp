@@ -122,10 +122,18 @@
             <div class="alert alert-danger" role="alert" id="invalidEmail" style="display:none;">
               Please enter a valid email address
             </div>
+            
             <input type="password" name="password" class="form-control" placeholder="Password" required>
             <div class="alert alert-danger" role="alert" id="noPassword" style="display:none;">
               Please enter a password
             </div>
+            <!--<div class="input-group">-->
+            <input type="hidden" name="preference" id="preference" value="1">
+            <div id="radioBtn" class="btn-group">
+              <a class="btn btn-primary btn-sm active" data-toggle="preference" data-title="1">Beverages</a>
+              <a class="btn btn-primary btn-sm notActive" data-toggle="preference" data-title="2">Food</a>
+            </div>
+            <!--</div>-->
 					</div>
 					</fieldset>
 					</form>
@@ -213,6 +221,15 @@
 
 					});
 		}
+
+    $('#radioBtn a').on('click', function(){
+      var sel = $(this).data('title');
+      var tog = $(this).data('toggle');
+      $('#'+tog).prop('value', sel);
+    
+      $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+      $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+    })
     </script>
   </body>
 </html>

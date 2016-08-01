@@ -775,7 +775,7 @@
     $email=$data['email'];
     $approved=0;
     $admin=0;
-    $dataPreference=0;
+    $dataPreference=$data['preference'];
 
     $insertUser=$this->connection->prepare("INSERT INTO Users (id ,username, password, salt, email, approved, admin, dataPreference) VALUES (DEFAULT,:username,:password,:salt, :email,:approved, :admin, :dataPreference)");
 
@@ -802,9 +802,30 @@
   }
 
   public function approveUser($user){
-    $query = $this->connection->prepare("UPDATE Users SET approved= :approved WHERE username= :username");
-    $query->bindParam(':username', $user);
-    $query->bindParam(':approved', 1);
+    $query = $this->connection->prepare("UPDATE Users SET approved = 1 WHERE username = :username");
+    $query->bindParam(':username', $user, PDO::PARAM_STR);
+    //$query->bindParam(':approved', 1);
+    $query->execute();
+  }
+
+  public function remAdminUser($user){
+    $query = $this->connection->prepare("UPDATE Users SET admin = 0 WHERE username = :username");
+    $query->bindParam(':username', $user, PDO::PARAM_STR);
+    //$query->bindParam(':approved', 1);
+    $query->execute();
+  }
+
+  public function addAdminUser($user){
+    $query = $this->connection->prepare("UPDATE Users SET admin = 1 WHERE username = :username");
+    $query->bindParam(':username', $user, PDO::PARAM_STR);
+    //$query->bindParam(':approved', 1);
+    $query->execute();
+  }
+
+  public function deleteAccount($user){
+    $query = $this->connection->prepare("DELETE FROM Users WHERE username= :username");
+    $query->bindParam(':username', $user, PDO::PARAM_STR);
+    //$query->bindParam(':approved', 1);
     $query->execute();
   }
 }

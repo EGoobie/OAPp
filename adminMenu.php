@@ -86,16 +86,16 @@
 
 									    echo ("<tr><th>".$username."</th><th>".$email."</th>");
                        if($admin==0){
-                        echo("<th><button href=\"#\" onclick=\"storeProduct('<?php echo $prodName;?>');return false;\" class=\"btn btn-sm btn-success\">Make Admin</button></th>");
+                        echo("<th><button href=\"#\" onclick=\"addAdminUser('".$username."');return false;\" class=\"btn btn-sm btn-success\">Make Admin</button></th>");
                       }
                       else{
-                        echo("<th><button href=\"#\" onclick=\"storeProduct('<?php echo $prodName;?>');return false;\" class=\"btn btn-sm btn-danger\">Remove Admin</button></th>");
+                        echo("<th><button href=\"#\" onclick=\"rmAdminUser('".$username."');return false;\" class=\"btn btn-sm btn-danger\">Remove Admin</button></th>");
                       }
                       if($approved==0){
                         echo("<th><button href=\"#\" onclick=\"approveUser('".$username."');return false;\" class=\"btn btn-sm btn-success\">Approve</button></th>");
                       }
                       else{
-                        echo("<th></th>");
+                        echo("<th><button href=\"#\" onclick=\"deleteUser('".$username."');return false;\" class=\"btn btn-sm btn-danger\">Delete Account</button></th>");
                       }
 
                       echo("</tr>");
@@ -138,15 +138,57 @@
     function approveUser($user){
       $.ajax({
 						type: "POST",
-					  url: "/approveUser.php",
+					  url: "phpClasses/approveUser.php",
             dataType: 'HTML',
-					  data: {'username': $user},
+					  data: {'username': $user, 'function': "approve"},
 						success: function(data){
 							if(data){
                 location.reload();
               }
 					 },
 			});
+    }
+
+    function rmAdminUser($user){
+      $.ajax({
+            type: "POST",
+            url: "phpClasses/approveUser.php",
+            dataType: 'HTML',
+            data: {'username': $user, 'function': "remove"},
+            success: function(data){
+              if(data){
+                location.reload();
+              }
+           },
+      });
+    }
+
+    function addAdminUser($user){
+      $.ajax({
+            type: "POST",
+            url: "phpClasses/approveUser.php",
+            dataType: 'HTML',
+            data: {'username': $user, 'function': "add"},
+            success: function(data){
+              if(data){
+                location.reload();
+              }
+           },
+      });
+    }
+
+    function deleteUser($user){
+      $.ajax({
+            type: "POST",
+            url: "phpClasses/approveUser.php",
+            dataType: 'HTML',
+            data: {'username': $user, 'function': "deleteAcc"},
+            success: function(data){
+              if(data){
+                location.reload();
+              }
+           },
+      });
     }
 
 	</script>
